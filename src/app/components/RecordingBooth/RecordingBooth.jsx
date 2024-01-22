@@ -1,0 +1,289 @@
+"use client";
+import React, { useEffect, useState, useRef } from "react";
+import { useAudioContext } from "../AudioContextProvider/AudioContextProvider.jsx";
+import './RecordingBooth.css';
+
+export default function RecordingBooth () {
+
+  const [isMicrophoneAllowed, setIsMicrophoneAllowed] = useState("prompt");
+  const [availableDevices, setAvailableDevices] = useState([]);
+  const [selectedDevice, setSelectedDevice] = useState(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [savedAudio, setSavedAudio] = useState([]);
+  const [trimStart, setTrimStart] = useState(0);
+  const [trimEnd, setTrimEnd] = useState(null);
+
+  let recordedChunks = useRef([]);
+  let mediaRecorderRef = useRef(null);
+  let streamRef = useRef(null);
+
+  function getAvailableAudioDevices() {
+    navigator.mediaDevices.enumerateDevices().then((devices) => {
+      const audioDevices = devices
+        .filter((d) => d.kind === "audioinput")
+        .map((d) => ({
+          id: d.deviceId,
+          label: d.label,
+        }));
+      setAvailableDevices(audioDevices);
+    });
+  }
+
+  useEffect(() => {
+    navigator.permissions.query({ name: "microphone" }).then(function (result) {
+      console.log("microphone permission:", result.state);
+      result.onchange = function () {
+        console.log("changed to:", result.state);
+      };
+      if (result.state === "denied") {
+        alert("Please allow microphone access to use Meeboard");
+      }
+    });
+  }, []);
+
+  function allowMicrophone() {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream) => {
+        console.log("Microphone access granted");
+        setIsMicrophoneAllowed("granted");
+        getAvailableAudioDevices();
+        // The state will be updated by the onchange event listener
+        stream.getTracks().forEach((track) => track.stop()); // Stop the stream here
+      })
+      .catch((err) => {
+        console.error("Error requesting microphone access:", err);
+        // You might also want to handle errors here, e.g., user declined the request
+      });
+  }
+
+  function handleClickSelectAudioDevice(id) {
+    setSelectedDevice(id);
+    console.log(id);
+  }
+
+  function startRecording() {
+    setIsRecording(true);
+    console.log("Recording started");
+    const audioConfig = selectedDevice && selectedDevice.length > 0
+      ? { deviceId: { exact: selectedDevice } }
+      : true;
+  
+    navigator.mediaDevices
+      .getUserMedia({ audio: audioConfig, video: false })
+      .then((obtainedStream) => {
+        streamRef.current = obtainedStream;
+        const options = { mimeType: "audio/webm" };
+        
+        // Initialize a new MediaRecorder
+        mediaRecorderRef.current = new MediaRecorder(streamRef.current, options);
+        
+        // Setup the dataavailable event
+        mediaRecorderRef.current.addEventListener("dataavailable", function (e) {
+          if (e.data.size > 0) {
+            recordedChunks.push(e.data);
+          }
+        });
+  
+        // Start the recording
+        mediaRecorderRef.current.start();
+      })
+      .catch((err) => {
+        console.error("Error requesting microphone access:", err);
+        setIsRecording(false);
+      });
+  }
+  
+  function stopRecording() {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+      // Stop the MediaRecorder
+      mediaRecorderRef.current.stop();
+  
+      // Once stopped, handle the recorded data
+      mediaRecorderRef.current.onstop = () => {
+        const audioBlob = new Blob(recordedChunks, { type: "audio/webm" });
+        setSavedAudio((prev) => [...prev, audioBlob]);
+  
+        // Clear the recorded chunks
+        recordedChunks = [];
+  
+        // Stop the media stream tracks
+        if (streamRef.current) {
+          streamRef.current.getTracks().forEach(track => track.stop());
+        }
+      };
+    } else {
+      console.log("MediaRecorder is not initialized or already stopped");
+    }
+  }
+  
+  function stopRecording() {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+      mediaRecorderRef.current.stop();
+
+      mediaRecorderRef.current.onstop = () => {
+        const audioBlob = new Blob(recordedChunks.current, { type: "audio/webm" });
+        setSavedAudio((prev) => [...prev, audioBlob]);
+
+        recordedChunks.current = []; // Clear the recorded chunks
+
+        if (streamRef.current) {
+          streamRef.current.getTracks().forEach(track => track.stop());
+        }
+      };
+    } else {
+      console.log("MediaRecorder is not initialized or already stopped");
+    }
+  }
+
+  function startRecording() {
+    setIsRecording(true);
+    console.log("Recording started");
+    const audioConfig = selectedDevice && selectedDevice.length > 0
+      ? { deviceId: { exact: selectedDevice } }
+      : true;
+
+    navigator.mediaDevices
+      .getUserMedia({ audio: audioConfig, video: false })
+      .then((obtainedStream) => {
+        streamRef.current = obtainedStream;
+        const options = { mimeType: "audio/webm" };
+        
+        mediaRecorderRef.current = new MediaRecorder(streamRef.current, options);
+        
+        mediaRecorderRef.current.addEventListener("dataavailable", function (e) {
+          if (e.data.size > 0) {
+            recordedChunks.current.push(e.data);
+          }
+        });
+
+        mediaRecorderRef.current.start();
+      })
+      .catch((err) => {
+        console.error("Error requesting microphone access:", err);
+        setIsRecording(false);
+      });
+  }
+//   function stopRecording() {
+//     console.log("stop button clicked");
+//     //setIsRecording(false);
+//     console.log("isRecording:", isRecording);
+//     if (
+//       mediaRecorderRef.current &&
+//       mediaRecorderRef.current.state !== "inactive"
+//     ) {
+//       mediaRecorderRef.current.stop();
+//       console.log(
+//         "MediaRecorder state after stopping:",
+//         mediaRecorderRef.current.state
+//       );
+//     } else {
+//       console.log("MediaRecorder is not initialized");
+//     }
+
+//     mediaRecorderRef.current.addEventListener('stop', () => {
+//         // Assuming recordedChunks is an array of the recorded media chunks
+//         let audioBlob = new Blob(recordedChunks, { type: 'audio/webm' });
+    
+//         // Here, implement the logic for trimming the audio
+//         // This can be complex as it might involve decoding the audio,
+//         // trimming the decoded audio buffer, and then re-encoding it
+    
+//         // For now, let's just set the final audio as is (without trimming)
+//         setSavedAudio((prev) => [...prev, audioBlob]);
+    
+//         // Clear the recorded chunks for the next recording
+//         recordedChunks = [];
+//       });
+//       setIsRecording(false);
+//   }
+
+  function deleteAudio() {
+    setSavedAudio([]);
+  }
+
+  return (
+    <div className="px-5">
+      <div className="py-5">
+        <div className="flex flex-col justify-center items-center gap-8">
+          {isMicrophoneAllowed === "granted" && (
+            <>
+              <p>Please select a microphone</p>
+              {availableDevices.map((audioDevice) => (
+                <div
+                  key={audioDevice.id}
+                  onClick={() => handleClickSelectAudioDevice(audioDevice.id)}
+                  className={`m-2 cursor-pointer text-black p-4 flex justify-center items-center bg-white rounded ${
+                    selectedDevice === audioDevice.id
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-200"
+                  }`}
+                >
+                  <span className="cursor-pointer">{audioDevice.label}</span>
+                </div>
+              ))}
+            </>
+          )}
+          {isMicrophoneAllowed === "prompt" && (
+            <>
+              <p>Microphone permission hasn't been granted</p>
+              <button
+                className="bg-white text-black p-1"
+                onClick={allowMicrophone}
+              >
+                Allow microphone
+              </button>
+            </>
+          )}
+          {isMicrophoneAllowed === "denied" && (
+            <>
+              <p>Microphone has been denied</p>
+              <button
+                className="bg-white text-black p-1"
+                onClick={allowMicrophone}
+              >
+                Allow microphone
+              </button>
+            </>
+          )}
+          {isMicrophoneAllowed === "granted" &&
+            !isRecording &&
+            selectedDevice && (
+              <>
+                <button
+                  className="bg-white text-black p-1"
+                  onClick={startRecording}
+                >
+                  Start recording
+                </button>
+              </>
+            )}
+          {isMicrophoneAllowed === "granted" && isRecording && (
+            <>
+              <button
+                className="bg-white text-black p-1"
+                onClick={stopRecording}
+              >
+                Stop recording
+              </button>
+            </>
+          )}
+          {savedAudio.map((audio, index) => (
+            <ul key={index}>
+              <li className="p-4 flex justify-center items-center bg-white rounded">
+                <p className="mr-4 text-black">Sample {index + 1}</p>
+                <audio src={URL.createObjectURL(audio)} controls />
+                <button
+                  className="bg-white text-black p-1 ml-4"
+                  onClick={deleteAudio}
+                >
+                  🅇
+                </button>
+              </li>
+            </ul>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
