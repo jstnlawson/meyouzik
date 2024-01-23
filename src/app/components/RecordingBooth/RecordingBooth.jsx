@@ -2,16 +2,18 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useAudioContext } from "../AudioContextProvider/AudioContextProvider.jsx";
 import './RecordingBooth.css';
+import AudioPlayer from "../AudioPlayer/AudioPlayer.jsx";
 
 export default function RecordingBooth () {
+
+  //const { audioContext } = useAudioContext();
+  const { audioContext, initializeAudioContext } = useAudioContext();
 
   const [isMicrophoneAllowed, setIsMicrophoneAllowed] = useState("prompt");
   const [availableDevices, setAvailableDevices] = useState([]);
   const [selectedDevice, setSelectedDevice] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
-  const [savedAudio, setSavedAudio] = useState([]);
-  const [trimStart, setTrimStart] = useState(0);
-  const [trimEnd, setTrimEnd] = useState(null);
+  const [savedAudioData, setSavedAudioData] = useState([]);
 
   let recordedChunks = useRef([]);
   let mediaRecorderRef = useRef(null);
@@ -62,71 +64,27 @@ export default function RecordingBooth () {
     console.log(id);
   }
 
-  function startRecording() {
-    setIsRecording(true);
-    console.log("Recording started");
-    const audioConfig = selectedDevice && selectedDevice.length > 0
-      ? { deviceId: { exact: selectedDevice } }
-      : true;
-  
-    navigator.mediaDevices
-      .getUserMedia({ audio: audioConfig, video: false })
-      .then((obtainedStream) => {
-        streamRef.current = obtainedStream;
-        const options = { mimeType: "audio/webm" };
-        
-        // Initialize a new MediaRecorder
-        mediaRecorderRef.current = new MediaRecorder(streamRef.current, options);
-        
-        // Setup the dataavailable event
-        mediaRecorderRef.current.addEventListener("dataavailable", function (e) {
-          if (e.data.size > 0) {
-            recordedChunks.push(e.data);
-          }
-        });
-  
-        // Start the recording
-        mediaRecorderRef.current.start();
-      })
-      .catch((err) => {
-        console.error("Error requesting microphone access:", err);
-        setIsRecording(false);
-      });
-  }
-  
-  function stopRecording() {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
-      // Stop the MediaRecorder
-      mediaRecorderRef.current.stop();
-  
-      // Once stopped, handle the recorded data
-      mediaRecorderRef.current.onstop = () => {
-        const audioBlob = new Blob(recordedChunks, { type: "audio/webm" });
-        setSavedAudio((prev) => [...prev, audioBlob]);
-  
-        // Clear the recorded chunks
-        recordedChunks = [];
-  
-        // Stop the media stream tracks
-        if (streamRef.current) {
-          streamRef.current.getTracks().forEach(track => track.stop());
-        }
-      };
-    } else {
-      console.log("MediaRecorder is not initialized or already stopped");
-    }
-  }
-  
   function stopRecording() {
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
       mediaRecorderRef.current.stop();
-
-      mediaRecorderRef.current.onstop = () => {
+      mediaRecorderRef.current.onstop = async () => {
         const audioBlob = new Blob(recordedChunks.current, { type: "audio/webm" });
-        setSavedAudio((prev) => [...prev, audioBlob]);
-
-        recordedChunks.current = []; // Clear the recorded chunks
-
+        const arrayBuffer = await audioBlob.arrayBuffer();
+  
+        // Check if audioContext is initialized
+        if (!audioContext) {
+          console.error("AudioContext not initialized");
+          return; // Or initialize it here if appropriate
+        }
+  
+        try {
+          const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+          setSavedAudioData((prev) => [...prev, audioBuffer]);
+        } catch (error) {
+          console.error("Error decoding audio data", error);
+        }
+  
+        recordedChunks.current = [];
         if (streamRef.current) {
           streamRef.current.getTracks().forEach(track => track.stop());
         }
@@ -134,9 +92,16 @@ export default function RecordingBooth () {
     } else {
       console.log("MediaRecorder is not initialized or already stopped");
     }
+    setIsRecording(false);
   }
+  
+  
 
   function startRecording() {
+     // Ensure AudioContext is initialized
+  if (!audioContext) {
+    initializeAudioContext(); // This should be a method to initialize your audioContext
+  }
     setIsRecording(true);
     console.log("Recording started");
     const audioConfig = selectedDevice && selectedDevice.length > 0
@@ -150,6 +115,8 @@ export default function RecordingBooth () {
         const options = { mimeType: "audio/webm" };
         
         mediaRecorderRef.current = new MediaRecorder(streamRef.current, options);
+
+        recordedChunks.current = [];
         
         mediaRecorderRef.current.addEventListener("dataavailable", function (e) {
           if (e.data.size > 0) {
@@ -164,42 +131,10 @@ export default function RecordingBooth () {
         setIsRecording(false);
       });
   }
-//   function stopRecording() {
-//     console.log("stop button clicked");
-//     //setIsRecording(false);
-//     console.log("isRecording:", isRecording);
-//     if (
-//       mediaRecorderRef.current &&
-//       mediaRecorderRef.current.state !== "inactive"
-//     ) {
-//       mediaRecorderRef.current.stop();
-//       console.log(
-//         "MediaRecorder state after stopping:",
-//         mediaRecorderRef.current.state
-//       );
-//     } else {
-//       console.log("MediaRecorder is not initialized");
-//     }
 
-//     mediaRecorderRef.current.addEventListener('stop', () => {
-//         // Assuming recordedChunks is an array of the recorded media chunks
-//         let audioBlob = new Blob(recordedChunks, { type: 'audio/webm' });
-    
-//         // Here, implement the logic for trimming the audio
-//         // This can be complex as it might involve decoding the audio,
-//         // trimming the decoded audio buffer, and then re-encoding it
-    
-//         // For now, let's just set the final audio as is (without trimming)
-//         setSavedAudio((prev) => [...prev, audioBlob]);
-    
-//         // Clear the recorded chunks for the next recording
-//         recordedChunks = [];
-//       });
-//       setIsRecording(false);
-//   }
 
-  function deleteAudio() {
-    setSavedAudio([]);
+  function deleteAudio(index) {
+    setSavedAudioData((prevAudioData) => prevAudioData.filter((_, i) => i !== index));
   }
 
   return (
@@ -215,7 +150,7 @@ export default function RecordingBooth () {
                   onClick={() => handleClickSelectAudioDevice(audioDevice.id)}
                   className={`m-2 cursor-pointer text-black p-4 flex justify-center items-center bg-white rounded ${
                     selectedDevice === audioDevice.id
-                      ? "bg-blue-500 text-white"
+                      ? "bg-blue-500 text-green-500"
                       : "bg-gray-200"
                   }`}
                 >
@@ -268,14 +203,14 @@ export default function RecordingBooth () {
               </button>
             </>
           )}
-          {savedAudio.map((audio, index) => (
+          {savedAudioData.map((audioBuffer, index) => (
             <ul key={index}>
               <li className="p-4 flex justify-center items-center bg-white rounded">
                 <p className="mr-4 text-black">Sample {index + 1}</p>
-                <audio src={URL.createObjectURL(audio)} controls />
+                <AudioPlayer audioBuffer={audioBuffer} />
                 <button
                   className="bg-white text-black p-1 ml-4"
-                  onClick={deleteAudio}
+                  onClick={() => deleteAudio(index)}
                 >
                   🅇
                 </button>
