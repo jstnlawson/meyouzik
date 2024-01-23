@@ -22,7 +22,7 @@ export default function RecordingBooth () {
   function getAvailableAudioDevices() {
     navigator.mediaDevices.enumerateDevices().then((devices) => {
       const audioDevices = devices
-        .filter((d) => d.kind === "audioinput")
+        .filter((d) => d.kind === "audioinput" && d.deviceId !== "default")
         .map((d) => ({
           id: d.deviceId,
           label: d.label,
@@ -144,7 +144,9 @@ export default function RecordingBooth () {
           {isMicrophoneAllowed === "granted" && (
             <>
               <p>Please select a microphone input</p>
-              {availableDevices.map((audioDevice) => (
+              
+              {availableDevices
+              .map((audioDevice) => (
                 <div
                   key={audioDevice.id}
                   onClick={() => handleClickSelectAudioDevice(audioDevice.id)}
@@ -155,6 +157,7 @@ export default function RecordingBooth () {
                   }`}
                 >
                   <span className="cursor-pointer">{audioDevice.label}</span>
+                  
                 </div>
               ))}
             </>
