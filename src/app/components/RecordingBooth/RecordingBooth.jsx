@@ -143,7 +143,7 @@ export default function RecordingBooth () {
         <div className="flex flex-col justify-center items-center gap-8">
           {isMicrophoneAllowed === "granted" && (
             <>
-              <p>Please select a microphone</p>
+              <p>Please select a microphone input</p>
               {availableDevices.map((audioDevice) => (
                 <div
                   key={audioDevice.id}
@@ -161,12 +161,12 @@ export default function RecordingBooth () {
           )}
           {isMicrophoneAllowed === "prompt" && (
             <>
-              <p>Microphone permission hasn't been granted</p>
+              <p>To create samples please allow microphone access</p>
               <button
-                className="bg-white text-black p-1"
+                className=" text-white p-1 hover:opacity-50"
                 onClick={allowMicrophone}
               >
-                Allow microphone
+                <span className="text-5xl">🎙️</span> Allow microphone
               </button>
             </>
           )}
