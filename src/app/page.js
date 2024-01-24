@@ -11,10 +11,11 @@ export default function Home() {
     <AudioContextProvider>
     <div className="px-5">
       <div className="py-5">
-        <div className="flex flex-col justify-center items-center gap-8">
+        <div className="flex flex-col justify-center items-center ">
           <RecordingBooth />
-          <InputUi />
+          
           <RecordingUi />
+          <InputUi />
         </div>
       </div>
     </div>

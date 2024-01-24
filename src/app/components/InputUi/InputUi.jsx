@@ -28,9 +28,18 @@ const InputUi = () => {
     }, []);
 
     return (
-        <div className='bg-[#abd1b5] flex flex-col justify-center items-center'>
-            <div>
-
+        <div className='flex input-ui__container'>
+        <div className='bg-[#abd1b5] flex flex-col justify-center items-center px-4 py-1 w-[250px] h-[110px]'>
+            <div className='flex input-label__container'>
+                <div className='input-label__one'>microphone 1</div>
+                <div className='input-label__two'>MacBook Air Microphone (Built-in)</div>
+                <div className='input-label__three'>microphone 3</div>
+            </div>
+            <div className='mb-1 flex justify-bottom bracket-div__container'>
+                <div className='bracket-div__one'></div>
+                <div className='bracket-div__two'></div>
+                <div className='bracket-div__three'></div>
+                <div className='bracket-div__four'></div>
             </div>
             <input
                 type="range"
@@ -40,7 +49,12 @@ const InputUi = () => {
                 onChange={autoPositionSlider} // Use onChange instead of onClick
                 className="slider"
             />
-            <p>Position: {position}</p>
+            {/* <p>Position: {position}</p> */}
+        </div>
+        <div className='flex justify-center items-center w-[250px] h-[110px] bg-[#abd1b5] gap-3'>
+            <button className='text-black px-4 py-1 bg-orange-100'>▶</button>
+            <button className='text-black px-4 py-1 bg-orange-100'>⬛️</button>
+        </div>
         </div>
     );
     };

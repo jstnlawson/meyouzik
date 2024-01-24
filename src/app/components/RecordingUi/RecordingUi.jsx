@@ -14,32 +14,35 @@ export default function RecordingUi() {
   return (
     <div>
       <div className={playerClass} onClick={togglePlaying}>
-        <div class="buttons">
-          <div class="left"></div>
-          <div class="middle"></div>
-          <div class="right"></div>
+        <div className="buttons">
+          <div className="left"></div>
+          <div className="middle"></div>
+          <div className="right"></div>
         </div>
-        <div class="small-reel">
-          <div class="middle circle"></div>
-          <div class="circle one"></div>
-          <div class="circle two"></div>
-          <div class="circle three"></div>
-          <div class="circle four"></div>
-          <div class="circle five"></div>
-          <div class="circle six"></div>
-          <div class="circle seven"></div>
-          <div class="circle eight"></div>
-          <div class="circle nine"></div>
+        <div className="small-reel">
+          <div className="middle circle"></div>
         </div>
-        <div class="big-reel">
-          <div class="hole one"></div>
-          <div class="hole two"></div>
-          <div class="hole three"></div>
-          <div class="middle-hole"></div>
+        <div className="small-reel__two">
+          <div className="middle circle"></div>
+        </div>
+        <div className="big-reel">
+          <div className="hole one"></div>
+          <div className="hole two"></div>
+          <div className="hole three"></div>
+          <div className="middle-hole"></div>
+        </div>
+        <div className="big-reel__two">
+          <div className="hole__two one"></div>
+          <div className="hole__two two"></div>
+          <div className="hole__two three"></div>
+          <div className="middle-hole"></div>
         </div>
 
-        <div class="tape-top"></div>
-        <div class="tape-bottom"></div>
+        {/* <div className="tape-top"></div> */}
+        <div className="tape-left"></div>
+        <div className="tape-right"></div>
+        {/* <div className="tape-bottom"></div> */}
+
       </div>
     </div>
   );
