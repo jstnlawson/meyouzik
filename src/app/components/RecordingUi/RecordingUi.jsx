@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import "./RecordingUi.css";
 
 export default function RecordingUi() {
-
-    const [isSpinning, setIsSpinning] = useState(false);
-    const playerClass = `tape-player has-tape ${isSpinning ? "playing" : ""}`;
-
+  const [isSpinning, setIsSpinning] = useState(false);
+  const playerClass = `tape-player has-tape ${isSpinning ? "playing" : ""}`;
 
   function togglePlaying() {
     setIsSpinning(!isSpinning);
@@ -14,11 +12,11 @@ export default function RecordingUi() {
   return (
     <div>
       <div className={playerClass} onClick={togglePlaying}>
-        <div className="buttons">
+        {/* <div className="buttons">
           <div className="left"></div>
           <div className="middle"></div>
           <div className="right"></div>
-        </div>
+        </div> */}
         <div className="small-reel">
           <div className="middle circle"></div>
         </div>
@@ -38,11 +36,22 @@ export default function RecordingUi() {
           <div className="middle-hole"></div>
         </div>
 
-        {/* <div className="tape-top"></div> */}
-        <div className="tape-left"></div>
-        <div className="tape-right"></div>
-        {/* <div className="tape-bottom"></div> */}
+        <div className="tape-reader__layer-one">
+          <div className="tape-reader__layer-two">
+            <div className="tape-reader__layer-three">
+              <div className="tape-reader__label">
+                <span className="tape-reader__label__l-span">meyouzik</span> <span className="tape-reader__label__r-span">a-2023</span> 
+              </div>
+              <div className="tape-reader__display">⏺ rec</div>
+            </div>
+          </div>
+        </div>
 
+        <div className="tape-left"></div>
+        <div className="tape-left__bottom"></div>
+        <div className="tape-right"></div>
+        <div className="tape-right__bottom"></div>
+        
       </div>
     </div>
   );

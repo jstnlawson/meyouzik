@@ -1,5 +1,3 @@
-
-
 .tape-player * {
     transition: ease all 0.3s;
     user-select: none;
@@ -7,27 +5,112 @@
 }
 
 .tape-player {
-    /* background: #ABD1B5; */
     background-color: #d7d7d7;
-    background-image: linear-gradient(180deg, #d7d7d7 0%, #353535a7 99%);
+    background-image: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
     width: 480px;
-    /* height: calc(62px * 3); */
     height: 320px;
-    /* border-radius: 5px; */
-    /* box-shadow: 0px 10px 10px #222; */
     border: 10px solid #5b3829;
-    
-    
     position: relative;
     transition: ease all 0.1s;
     cursor: pointer;
+    box-sizing: border-box;
+
+}
+
+.tape-reader__layer-one {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 51px;
+    width: 101px;
+    border-radius: 5px;
+    background-color: black;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    clip-path: ellipse(85% 100% at 50% 0%);
+    border-bottom-left-radius: 17px;
+    /* Adjust as needed */
+    border-bottom-right-radius: 17px;
+    /* Adjust as needed */
+    z-index: 0;
+}
+
+.tape-reader__layer-two {
+    position: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    width: 98px;
+    border-radius: 3px;
+    background-color: #d7d7d7;
+    background-image: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
+    clip-path: ellipse(85% 100% at 50% 0%);
+    border-bottom-left-radius: 15px;
+    /* Adjust as needed */
+    border-bottom-right-radius: 15px;
+    /* Adjust as needed */
+    z-index: 1;
+}
+
+.tape-reader__layer-three {
+    position: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 44px;
+    width: 94px;
+    border-radius: 2px;
+    background-color: #333;
+    background: linear-gradient(to bottom, #333 0px, #222 2px, #333 4px, #222 6px, #333 8px, #222 10px, #333 12px, #222 14px, #333 16px, #222 18px, #333 20px, #222 22px, #333 24px, #222 26px, #333 28px, #222 30px, #333 32px, #222 34px, #333 36px, #222 38px, #333 40px, #222 42px, #333 44px, #222 46px, #333 48px);
+    clip-path: ellipse(85% 100% at 50% 0%);
+    border-bottom-left-radius: 14px;
+    /* Adjust as needed */
+    border-bottom-right-radius: 14px;
+    /* Adjust as needed */
+    z-index: 2;
+    /* padding: 3px; */
+}
+
+.tape-reader__label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    padding: 1px 0;
+    font-size: 8px;
+    text-transform: capitalize;
+    border-radius: 1px;
+    background: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
+}
+
+.tape-reader__label__l-span {
+    margin-right: 5px;
+    color: #333;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.tape-reader__label__r-span {
+    padding: 0 4px;
+    background-color: #333;
+    color: #d7d7d7;
+    text-transform: uppercase;
+}
+
+.tape-reader__display {
+    color: #333;
 }
 
 .tape-player .small-reel {
     width: 25px;
     height: 25px;
     background: white;
-    background: radial-gradient(circle at 50%, #9a9a9a 0%, #acacac 20%, #bcbcbc 40%, #cccccc 60%, #dcdcdc 80%, #ececec 100%  );
+    background: radial-gradient(circle at 50%, #9a9a9a 0%, #acacac 20%, #bcbcbc 40%, #cccccc 60%, #dcdcdc 80%, #ececec 100%);
     position: absolute;
     bottom: 20px;
     left: 30px;
@@ -42,7 +125,7 @@
     width: 25px;
     height: 25px;
     background: white;
-    background: radial-gradient(circle at 50%, #9a9a9a 0%, #acacac 20%, #bcbcbc 40%, #cccccc 60%, #dcdcdc 80%, #ececec 100%  );
+    background: radial-gradient(circle at 50%, #9a9a9a 0%, #acacac 20%, #bcbcbc 40%, #cccccc 60%, #dcdcdc 80%, #ececec 100%);
     position: absolute;
     bottom: 20px;
     right: 30px;
@@ -64,26 +147,49 @@
 
 .tape-right {
     position: absolute;
-    bottom: 115px;
-    right: -61px;
-    width: 162px;
+    bottom: 80px;
+    right: -32px;
+    width: 100px;
     height: 1px;
-    transform: rotateZ(98deg);
+    transform: rotateZ(105deg);
     background: #333;
     z-index: 2;
-    display: none;
+   
+}
+
+.tape-right__bottom {
+    position: absolute;
+    bottom: 33px;
+    right: 42px;
+    width: 140px;
+    height: 1px;
+    transform: rotateZ(190deg);
+    background: #333;
+    z-index: 2;
+    
 }
 
 .tape-left {
     position: absolute;
-    bottom: 90px;
-    left: -17px;
-    width: 105px;
+    bottom: 62px;
+    left: 8px;
+    width: 52px;
     height: 1px;
     transform: rotateZ(94deg);
     background: #333;
     z-index: 2;
-    display: none;
+    
+}
+
+.tape-left__bottom {
+    position: absolute;
+    bottom: 33px;
+    left: 42px;
+    width: 140px;
+    height: 1px;
+    transform: rotateZ(170deg);
+    background: #333;
+    z-index: 2;
 }
 
 
@@ -92,16 +198,14 @@
     border-radius: 50%;
     height: 215px;
     width: 215px;
-    /* background: rgb(255, 255, 255); */
     background-color: white;
-    background: radial-gradient(circle at 50%, #9a9a9a 0%, #acacac 20%, #bcbcbc 40%, #cccccc 60%, #dcdcdc 80%, #ececec 100%  );
+    background-image: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
     position: absolute;
     left: -5px;
     top: 20px;
     box-shadow: 0 0 10px 3px #33333370;
     animation: rotating 2s linear infinite;
     animation-play-state: paused;
-    /* border: 2px solid transparent; */
 }
 
 .tape-player .big-reel__two {
@@ -109,8 +213,7 @@
     height: 215px;
     width: 215px;
     background-color: white;
-    /* background-color: #d7d7d7; */
-    background: radial-gradient(circle at 50%, #9a9a9a 0%, #acacac 20%, #bcbcbc 40%, #cccccc 60%, #dcdcdc 80%, #ececec 100%  );
+    background-image: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
     position: absolute;
     right: -5px;
     top: 20px;
@@ -150,7 +253,7 @@
     left: calc(50% - 50px);
     height: 100px;
     width: 100px;
-    background: linear-gradient(to bottom, rgb(112, 112, 112) 25px, #333 1px );
+    background: linear-gradient(to bottom, rgb(112, 112, 112) 25px, #333 1px);
     -webkit-clip-path: polygon(50% 0%, 0% 100%, 0% 100%, 30% 100%);
     /* -webkit-clip-path: polygon(0% 0%, 100% 0%, 82% 100%, 18% 100%); */
     transform: translateY(-37px);
@@ -222,6 +325,8 @@
 .tape-player.playing>.big-reel__two {
     animation-play-state: running;
 }
+
+
 
 .tape-player.playing>.buttons>.left {
     height: 5px;
