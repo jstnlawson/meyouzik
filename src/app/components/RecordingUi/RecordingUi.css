@@ -14,7 +14,7 @@
     transition: ease all 0.1s;
     cursor: pointer;
     box-sizing: border-box;
-
+    z-index: 0;
 }
 
 .tape-reader__layer-one {
@@ -66,7 +66,13 @@
     width: 94px;
     border-radius: 2px;
     background-color: #333;
-    background: linear-gradient(to bottom, #333 0px, #222 2px, #333 4px, #222 6px, #333 8px, #222 10px, #333 12px, #222 14px, #333 16px, #222 18px, #333 20px, #222 22px, #333 24px, #222 26px, #333 28px, #222 30px, #333 32px, #222 34px, #333 36px, #222 38px, #333 40px, #222 42px, #333 44px, #222 46px, #333 48px);
+    background: repeating-linear-gradient(
+    to bottom,
+    #333 1px, #222 2px 
+    
+);
+
+    /* background: linear-gradient(to bottom, #333 0px, #222 2px, #333 4px, #222 6px, #333 8px, #222 10px, #333 12px, #222 14px, #333 16px, #222 18px, #333 20px, #222 22px, #333 24px, #222 26px, #333 28px, #222 30px, #333 32px, #222 34px, #333 36px, #222 38px, #333 40px, #222 42px, #333 44px, #222 46px, #333 48px); */
     clip-path: ellipse(85% 100% at 50% 0%);
     border-bottom-left-radius: 14px;
     /* Adjust as needed */
@@ -145,67 +151,91 @@
     top: calc(47%);
 }
 
-.tape-right {
+
+.tape-player .tape-left, .tape-left__bottom, .tape-right, .tape-right__bottom {
     position: absolute;
-    bottom: 80px;
-    right: -32px;
-    width: 100px;
-    height: 1px;
-    transform: rotateZ(105deg);
     background: #333;
-    z-index: 2;
-   
+    box-shadow: 0 0 7px 1px #3333339b;
 }
 
-.tape-right__bottom {
-    position: absolute;
-    bottom: 33px;
-    right: 42px;
-    width: 140px;
+.tape-player .tape-left {
+    bottom: 100px;
+    left: -36px;
+    width: 132px;
     height: 1px;
-    transform: rotateZ(190deg);
-    background: #333;
-    z-index: 2;
-    
-}
-
-.tape-left {
-    position: absolute;
-    bottom: 62px;
-    left: 8px;
-    width: 52px;
-    height: 1px;
-    transform: rotateZ(94deg);
-    background: #333;
-    z-index: 2;
-    
+    transform: rotateZ(89deg);
+    z-index: 0;  
 }
 
 .tape-left__bottom {
-    position: absolute;
     bottom: 33px;
     left: 42px;
     width: 140px;
     height: 1px;
     transform: rotateZ(170deg);
-    background: #333;
-    z-index: 2;
 }
 
+.tape-right {
+    bottom: 80px;
+    right: -32px;
+    width: 100px;
+    height: 1px;
+    transform: rotateZ(105deg); 
+}
 
+.tape-right__bottom {
+    bottom: 33px;
+    right: 42px;
+    width: 140px;
+    height: 1px;
+    transform: rotateZ(190deg);
+}
+
+.tape-player .big-reel__container--left{
+    position: absolute;
+    border-radius: 50%;
+    
+    left: -5px;
+    top: 20px;
+    height: 215px;
+    width: 215px;
+    animation: rotating 2s linear infinite;
+    animation-play-state: paused;
+}
 
 .tape-player .big-reel {
     border-radius: 50%;
+    border: 5px solid rgba(253, 248, 232, 0.27);
     height: 215px;
     width: 215px;
-    background-color: white;
-    background-image: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
-    position: absolute;
-    left: -5px;
-    top: 20px;
+    background-color: rgba(253, 248, 232, 0.27);
+    position: inherit;
     box-shadow: 0 0 10px 3px #33333370;
     animation: rotating 2s linear infinite;
     animation-play-state: paused;
+    z-index: 3;
+}
+
+.tape-player .big-reel__back-plate--left {
+    border-radius: 50%;
+    height: 215px;
+    width: 215px;
+    background-color: rgba(253, 248, 232, 0.27);
+    position: absolute;
+    left: -3px;
+    top: 20px;
+    z-index: 0;
+}
+
+.tape-player .tape-role__left {
+    border-radius: 50%;
+    top: calc(50% - 75px);
+    left: calc(50% - 75px);
+    height: 150px;
+    width: 150px;
+    position: inherit;
+    background: repeating-radial-gradient(circle at 50%, black 0px, #333 2px);
+    z-index: 0;
 }
 
 .tape-player .big-reel__two {
@@ -220,8 +250,14 @@
     box-shadow: 0 0 10px 3px #33333370;
     animation: rotating 2s linear infinite;
     animation-play-state: paused;
-    border: 2px solid transparent;
 }
+
+.tape-player.has-tape>.small-reel,
+.tape-player.has-tape>.small-reel__two {
+    border: 2px solid #333;
+    z-index: 2;
+}
+
 
 .tape-player .buttons {
     position: absolute;
@@ -247,17 +283,17 @@
     height: 20px;
 }
 
-.tape-player .hole {
-    position: absolute;
-    top: calc(50% - 50px);
-    left: calc(50% - 50px);
-    height: 100px;
-    width: 100px;
-    background: linear-gradient(to bottom, rgb(112, 112, 112) 25px, #333 1px);
-    -webkit-clip-path: polygon(50% 0%, 0% 100%, 0% 100%, 30% 100%);
-    /* -webkit-clip-path: polygon(0% 0%, 100% 0%, 82% 100%, 18% 100%); */
+/* .tape-player .hole {
+    position: inherit;
+    top: calc(50% - 62px);
+    left: calc(50% - 25px);
+    height: 124px;
+    width: 50px;
+    background: #333;
+    -webkit-clip-path: polygon(30% 0%, 70% 0%, 82% 100%, 18% 100%);
     transform: translateY(-37px);
-}
+    z-index: 3;
+} */
 
 .tape-player .hole__two {
     position: absolute;
@@ -287,15 +323,39 @@
 }
 
 .tape-player .middle-hole {
-    width: 50px;
-    height: 50px;
-    background: #333;
-    top: calc(50% - 25px);
-    left: calc(50% - 25px);
+    width: 60px;
+    height: 60px;
+    background-color: rgba(253, 248, 232, 0.68);
+    /* background: #333; */
+    /* background-image: linear-gradient(to right, #777676 0%, #d7d7d7 50%, #777676 100%); */
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
     position: inherit;
     border-radius: 50%;
-    border: 3px solid #555;
+    /* border: 3px solid #555; */
     box-sizing: border-box;
+    z-index: 3;
+}
+
+.mounting-pin__container-left{
+    position: absolute;
+    border-radius: 50%; 
+    left: -5px;
+    top: 20px;
+    height: 215px;
+    width: 215px;
+}
+
+.tape-player .mounting-pin__left {
+    position: inherit;
+    border-radius: 50%;
+    top: calc(50% - 4px);
+    left: calc(50% - 4px);
+    height: 8px;
+    width: 8px;
+    background-image: linear-gradient(to right, #777676 0%, #d7d7d7 50%, #777676 100%);
+    box-shadow: 0 0 12px 3px #33333370;
+    z-index: 3;
 }
 
 @keyframes rotating {
@@ -305,6 +365,15 @@
 
     to {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes counter-rotating {
+    from {
+        transform: rotate(360deg);
+    }
+    to {
+        transform: rotate(0deg);
     }
 }
 
@@ -322,8 +391,14 @@
 .tape-player.playing>.small-reel,
 .tape-player.playing>.small-reel__two,
 .tape-player.playing>.big-reel,
-.tape-player.playing>.big-reel__two {
+.tape-player.playing>.big-reel__two,
+.tape-player.playing>.big-reel__container--left
+ {
     animation-play-state: running;
+}
+
+.tape-player.playing>.tape-left {
+    animation-play-state: paused;
 }
 
 
@@ -375,12 +450,12 @@
 }
 
 
-.tape-player.has-tape>.small-reel,
+/* .tape-player.has-tape>.small-reel,
 .tape-player.has-tape>.small-reel__two,
 .tape-player.has-tape>.big-reel__two {
     border: 2px solid #333;
     z-index: 2;
-}
+} */
 
 
 
@@ -389,4 +464,26 @@
 .tape-player.has-tape>.tape-right,
 .tape-player.has-tape>.tape-left {
     display: inherit;
+}
+
+.glow-red__text {
+    color: red;
+    text-shadow: 0 0 5px red;
+    transition: ease all 0.3s;
+}
+
+.glow-red {
+    color: red;
+    box-shadow: 0 0 10px red;
+}
+
+.tape-reader__display{
+    color: #333;
+}
+
+.tape-player.playing .tape-reader__display {
+    color: red;
+    background-color: #333;
+    text-shadow: 0 0 5px red;
+    transition: all 0.3s cubic-bezier(0.8, 1, 0.3, 0);
 }
