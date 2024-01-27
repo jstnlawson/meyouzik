@@ -23,30 +23,42 @@ export default function RecordingUi() {
         <div className="middle circle"></div>
       </div>
       
-      <div className="big-reel__back-plate--left"> </div>
-        <div className="tape-left"></div>
+      <div className="big-reel__back-plate--left"></div>
+      <div className="tape-left"></div>
       <div className="big-reel__container--left">
-        
-      
         <div className="tape-role__left"></div>
         <div className="big-reel"></div>
         <div className="hole one"></div>
         <div className="hole two"></div>
         <div className="hole three"></div>
-        <div className="middle-hole"></div>
-        
+        <div className="middle-hole">
+        <div className="little-middle--one"></div>
+        <div className="little-middle--two"></div>
+        <div className="little-middle--three"></div>
+        </div>
       </div>
-
       <div className="mounting-pin__container-left">
         <div className="mounting-pin__left"></div>
       </div>
 
-      <div className="big-reel__two">
+      <div className="big-reel__back-plate--right"></div>
+      <div className="tape-right"></div>
+      <div className="big-reel__container--right"></div>
+      <div className="tape-role__right"></div>
+
+      <div className="big-reel__two"></div>
         <div className="hole__two one"></div>
         <div className="hole__two two"></div>
         <div className="hole__two three"></div>
-        <div className="middle-hole"></div>
+        <div className="middle-hole">
+        <div className="little-middle--one"></div>
+        <div className="little-middle--two"></div>
+        <div className="little-middle--three"></div>
+        </div>
+        <div className="mounting-pin__container-right">
+        <div className="mounting-pin__right"></div>
       </div>
+     
 
       <div className="tape-reader__layer-one">
         <div className="tape-reader__layer-two">
