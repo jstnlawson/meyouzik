@@ -7,9 +7,8 @@
 .tape-player {
     background-color: #d7d7d7;
     background-image: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
-    width: 480px;
-    height: 320px;
-    border: 10px solid #5b3829;
+    width: 460px;
+    height: 300px;
     position: relative;
     transition: ease all 0.1s;
     cursor: pointer;
@@ -17,6 +16,35 @@
     z-index: 0;
 }
 
+.tape-player:before, .tape-player:after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    bottom: 0;
+    width: 10px;
+    height: 420px;
+    border-radius: 0 0 2px 2px;
+    background: repeating-linear-gradient(to right, rgb(85, 49, 36) 0px, rgb(65, 36, 24) 1px, rgb(75, 42, 30) 2px, rgb(82, 42, 29) 3px, rgb(74, 47, 38) 4px);
+    z-index: -5;
+}
+
+.tape-player:before { left: -10px ;}
+
+.tape-player:after { right: -10px; }
+
+.top {
+    width: 100%;
+    height: 4px;
+    background-image: linear-gradient(to right, #777676 0%, #d7d7d7 50%, #777676 100%); ;
+}
+
+.vents {
+    width: 100%;
+    height: 20px;
+    background-color: #333;
+    background: repeating-linear-gradient(to bottom,
+            #000000 0px, #595858 5px);
+}
 
 /*----------------------------------------------------------------------------------
     Tape Reader
@@ -69,7 +97,7 @@
     flex-direction: column;
     height: 44px;
     width: 94px;
-    border-radius: 2px;
+    border-radius: 4px;
     background-color: #333;
     background: repeating-linear-gradient(to bottom,
             #333 1px, #222 2px);
@@ -92,7 +120,7 @@
     padding: 1px 0;
     font-size: 8px;
     text-transform: capitalize;
-    border-radius: 1px;
+    border-radius: 2px;
     background: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
 }
 
@@ -114,18 +142,39 @@
     color: #333;
 }
 
+.glow-red__text {
+    color: red;
+    text-shadow: 0 0 5px red;
+    transition: ease all 0.3s;
+}
+
+.glow-red {
+    color: red;
+    box-shadow: 0 0 10px red;
+}
+
+.tape-reader__display {
+    color: #333;
+}
+
+.tape-player.playing .tape-reader__display {
+    color: red;
+    background-color: #333;
+    text-shadow: 0 0 5px red;
+    transition: all 0.3s cubic-bezier(0.8, 1, 0.3, 0);
+}
+
 /*----------------------------------------------------------------------------------
     Small Reels
 ----------------------------------------------------------------------------------*/
 
-.tape-player .small-reel {
-    width: 25px;
-    height: 25px;
+.small-reel, .small-reel__two {
+    width: 15px;
+    height: 15px;
     background: white;
     background: radial-gradient(circle at 50%, #9a9a9a 0%, #acacac 20%, #bcbcbc 40%, #cccccc 60%, #dcdcdc 80%, #ececec 100%);
     position: absolute;
     bottom: 20px;
-    left: 30px;
     border-radius: 50%;
     box-shadow: 0 0 10px 3px #33333370;
     animation: rotating 2s linear infinite;
@@ -133,24 +182,13 @@
     border: 2px solid transparent;
 }
 
-.tape-player .small-reel__two {
-    width: 25px;
-    height: 25px;
-    background: white;
-    background: radial-gradient(circle at 50%, #9a9a9a 0%, #acacac 20%, #bcbcbc 40%, #cccccc 60%, #dcdcdc 80%, #ececec 100%);
-    position: absolute;
-    bottom: 20px;
-    right: 30px;
-    border-radius: 50%;
-    box-shadow: 0 0 10px 3px #33333370;
-    animation: rotating 2s linear infinite;
-    animation-play-state: paused;
-    border: 2px solid transparent;
-}
+.small-reel { left: 89px; }
+
+.small-reel__two { right: 89px; }
 
 .tape-player .circle {
     position: absolute;
-    width: 25px;
+    width: 15px;
     height: 1px;
     background: #333;
     left: calc(-2px);
@@ -162,46 +200,47 @@
 ----------------------------------------------------------------------------------*/
 
 
-.tape-player .tape-left,
+.tape-left,
 .tape-left__bottom,
 .tape-right,
 .tape-right__bottom {
     position: absolute;
     background: #333;
     box-shadow: 0 0 7px 1px #3333339b;
-}
-
-.tape-player .tape-left {
-    bottom: 100px;
-    left: -36px;
-    width: 132px;
-    height: 1px;
-    transform: rotateZ(89deg);
     z-index: 0;
 }
 
-.tape-left__bottom {
-    bottom: 33px;
-    left: 42px;
-    width: 140px;
+.tape-left {
+    bottom: 91px;
+    left: -1px;
+    width: 138px;
     height: 1px;
-    transform: rotateZ(170deg);
+    transform: rotateZ(71deg);   
+}
+
+.tape-left__bottom {
+    bottom: 37px;
+    left: 93px;
+    width: 90px;
+    height: 1px;
+    transform: rotateZ(160deg);
 }
 
 .tape-right {
     bottom: 80px;
-    right: -32px;
-    width: 100px;
+    right: -3px;
+    width: 130px;
     height: 1px;
-    transform: rotateZ(105deg);
+    transform: rotateZ(118deg);
+    z-index: 0;
 }
 
 .tape-right__bottom {
-    bottom: 33px;
-    right: 42px;
-    width: 140px;
+    bottom: 37px;
+    right: 93px;
+    width: 90px;
     height: 1px;
-    transform: rotateZ(190deg);
+    transform: rotateZ(200deg);
 }
 
 /*----------------------------------------------------------------------------------
@@ -209,22 +248,25 @@
 ----------------------------------------------------------------------------------*/
 
 
-.tape-player .big-reel__container--left {
+.big-reel__container--left , .big-reel__container--right {
     position: absolute;
     border-radius: 50%;
-    left: -5px;
-    top: 20px;
     height: 215px;
     width: 215px;
+    top: 20px;
     animation: rotating 2s linear infinite;
     animation-play-state: paused;
 }
 
-.tape-player .big-reel {
+.big-reel__container--left { left: -5px; }
+
+.big-reel__container--right { right: -5px; }
+
+.big-reel, .big-reel__two {
     border-radius: 50%;
     border: 5px solid rgba(253, 248, 232, 0.15);
-    height: 215px;
-    width: 215px;
+    height: 100%;
+    width: 100%;
     background-color: rgba(253, 248, 232, 0.19);
     position: inherit;
     box-shadow: 0 0 10px 3px #33333370;
@@ -233,41 +275,40 @@
     z-index: 3;
 }
 
-.tape-player .big-reel__back-plate--left {
+.big-reel__back-plate--left, .big-reel__back-plate--right {
     border-radius: 50%;
     height: 215px;
     width: 215px;
     background-color: rgba(253, 248, 232, 0.19);
     position: absolute;
-    left: -3px;
     top: 20px;
     z-index: 0;
 }
 
-.tape-player .tape-role__left {
+.big-reel__back-plate--left { left: -2px; }
+
+.big-reel__back-plate--right { right: -2px; }
+
+.tape-role__left, .tape-role__right {
     border-radius: 50%;
-    top: calc(50% - 75px);
-    left: calc(50% - 75px);
-    height: 150px;
-    width: 150px;
     position: inherit;
     background: repeating-radial-gradient(circle at 50%, black 0px, #333 2px);
     z-index: 0;
 }
 
-.tape-player .big-reel__two {
-    border-radius: 50%;
-    height: 215px;
-    width: 215px;
-    background-color: white;
-    background-image: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
-    position: absolute;
-    right: -5px;
-    top: 20px;
-    box-shadow: 0 0 10px 3px #33333370;
-    animation: rotating 2s linear infinite;
-    animation-play-state: paused;
-}
+.tape-role__left { 
+    top: calc(50% - 60px);
+    left: calc(50% - 60px);
+    height: 120px;
+    width: 120px;
+ }
+
+.tape-role__right { 
+    top: calc(50% - 80px);
+    left: calc(50% - 80px);
+    height: 160px;
+    width: 160px;
+ }
 
 .tape-player.has-tape>.small-reel,
 .tape-player.has-tape>.small-reel__two {
@@ -300,7 +341,7 @@
     height: 20px;
 } */
 
-.tape-player .hole {
+/* .hole, .hole__two {
     position: inherit;
     top: calc(50% - 35px);
     left: calc(50% - 20px);
@@ -310,20 +351,12 @@
     background: repeating-linear-gradient(to bottom,
             #333 1px, #222 2px);
     -webkit-clip-path: polygon(30% 0%, 70% 0%, 82% 100%, 18% 100%);
-    transform: translateY(-37px);
     z-index: 3;
-}
+} */
 
-.tape-player .hole__two {
-    position: absolute;
-    top: calc(50% - 50px);
-    left: calc(50% - 50px);
-    height: 100px;
-    width: 100px;
-    background: #333;
-    -webkit-clip-path: polygon(50% 0%, 0% 100%, 0% 100%, 30% 100%);
-    transform: rotateZ(40deg) translateY(-37px);
-}
+/* .hole { transform: rotateZ(0deg) translateY(-37px); }
+
+.hole__two { transform: rotateZ(40deg) translateY(-37px); }
 
 .tape-player .hole.two {
     transform: rotateZ(120deg) translateY(-37px);
@@ -339,7 +372,7 @@
 
 .tape-player .hole__two.three {
     transform: rotateZ(280deg) translateY(-37px);
-}
+} */
 
 .tape-player .middle-hole {
     width: 60px;
@@ -359,7 +392,6 @@
 .middle-hole div {
     position: absolute;
     border-radius: 50%;
-    /* background-color: #333; */
     height: 8px;
     width: 8px;
     z-index: 5;
@@ -380,7 +412,7 @@
 }
 
 .little-middle--three {
-    top: calc(83% - 4px);
+    top: calc(86% - 4px);
     left: calc(50% - 4px);
     background: repeating-linear-gradient(to bottom,
             #333 1px, #565656 2px);
@@ -395,7 +427,16 @@
     width: 215px;
 }
 
-.tape-player .mounting-pin__left {
+.mounting-pin__container-right {
+    position: absolute;
+    border-radius: 50%;
+    right: -5px;
+    top: 20px;
+    height: 215px;
+    width: 215px;
+}
+
+.mounting-pin__left, .mounting-pin__right {
     position: inherit;
     border-radius: 50%;
     top: calc(50% - 4px);
@@ -417,17 +458,7 @@
     }
 }
 
-@keyframes counter-rotating {
-    from {
-        transform: rotate(360deg);
-    }
-
-    to {
-        transform: rotate(0deg);
-    }
-}
-
-.tape-player .signature {
+/* .tape-player .signature {
     top: 20px;
     left: 25px;
     position: absolute;
@@ -436,27 +467,28 @@
     width: 100px;
     font-family: 'Parisienne', cursive;
     color: black;
-}
+} */
 
 .tape-player.playing>.small-reel,
 .tape-player.playing>.small-reel__two,
 .tape-player.playing>.big-reel,
 .tape-player.playing>.big-reel__two,
-.tape-player.playing>.big-reel__container--left {
+.tape-player.playing>.big-reel__container--left,
+.tape-player.playing>.big-reel__container--right {
     animation-play-state: running;
 }
 
-.tape-player.playing>.tape-left {
+/* .tape-player.playing>.tape-left {
     animation-play-state: paused;
-}
+} */
 
 
 
-.tape-player.playing>.buttons>.left {
+/* .tape-player.playing>.buttons>.left {
     height: 5px;
-}
+} */
 
-.vu-meter {
+/* .vu-meter {
     background: white;
     width: 60px;
     height: 38px;
@@ -465,9 +497,9 @@
     position: absolute;
     border-radius: 3px;
     box-shadow: 0 0 4px inset;
-}
+} */
 
-.color-bar {
+/* .color-bar {
     width: 50px;
     left: 5px;
     top: 20px;
@@ -484,9 +516,9 @@
     background: white;
     width: 55px;
     height: 0px;
-}
+} */
 
-.tape-top {
+/* .tape-top {
     position: absolute;
     top: 60px;
     left: 34px;
@@ -496,7 +528,7 @@
     transform: rotateZ(-2deg);
     z-index: 2;
     display: none;
-}
+} */
 
 
 /* .tape-player.has-tape>.small-reel,
@@ -509,30 +541,9 @@
 
 
 
-.tape-player.has-tape>.tape-top,
-.tape-player.has-tape>.tape-right,
+
+/* .tape-player.has-tape>.tape-right,
 .tape-player.has-tape>.tape-left {
     display: inherit;
-}
+} */
 
-.glow-red__text {
-    color: red;
-    text-shadow: 0 0 5px red;
-    transition: ease all 0.3s;
-}
-
-.glow-red {
-    color: red;
-    box-shadow: 0 0 10px red;
-}
-
-.tape-reader__display {
-    color: #333;
-}
-
-.tape-player.playing .tape-reader__display {
-    color: red;
-    background-color: #333;
-    text-shadow: 0 0 5px red;
-    transition: all 0.3s cubic-bezier(0.8, 1, 0.3, 0);
-}

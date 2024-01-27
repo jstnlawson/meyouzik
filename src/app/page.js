@@ -15,7 +15,7 @@ export default function Home() {
           <RecordingBooth />
           
           <RecordingUi />
-          <InputUi />
+          {/* <InputUi /> */}
         </div>
       </div>
     </div>

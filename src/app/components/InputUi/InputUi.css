@@ -1,18 +1,17 @@
 .input-ui__container {
-    border-left: 10px solid #5b3829;
-    border-right: 10px solid #5b3829;
-    border-bottom: 10px solid #5b3829;
+    background-image: linear-gradient(to right, #a2a2a2 0%, #e7e7e7 50%, #a2a2a2 100%); ;
+
 }
 
 .slider {
     -webkit-appearance: none;
-    width: 70px;
-    height: 22px;
+    width: 60px;
+    height: 20px;
     /* border-radius: 5px;   */
-    border-top: 4px solid #819e8a;
-    border-bottom: 4px solid #819e8a;
-    border-left: 6px solid #99bca4;
-    border-right: 6px solid #99bca4;
+    border-top: 4px solid rgba(0, 0, 0, 0.517);
+    border-bottom: 4px solid rgba(0, 0, 0, 0.517);
+    border-left: 6px solid rgba(0, 0, 0, 0.201);
+    border-right: 6px solid rgba(0, 0, 0, 0.201);
     background: #e9e6e3;
     outline: none;
     opacity: 0.7;
@@ -27,7 +26,7 @@
     -webkit-appearance: none;
     appearance: none;
     width: 20px;
-    height: 20px;
+    height: 18px;
     border-radius: 5px;
     /* background: #b3b3b3; */
     cursor: grab;
@@ -49,46 +48,46 @@
     /* align-items: end; */
     /* border: 1px solid #354237; */
     height: fit-content;
-    width: 37px;
+    width: 28px;
     text-align: center;
     font-size: .5rem;
     font-weight: 500;
-    color: #5a4025;
+    color: black;
 }
 
 .bracket-div__container { align-items: end; }
 
-.bracket-div__container div { width: 17px;}
+.bracket-div__container div { width: 13px;}
 
 .bracket-div__one {
-    height: 10px;
+    height: 6px;
     
-    border-top: 1px solid #5a4025;
-    border-right: 1px solid #5a4025;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
     border-bottom: none;
     border-left: none;
 }
 
 .bracket-div__two {
-    height: 10px;
-    width: 21px;
+    height: 7px;
+    /* width: 22px; */
     border-top: none;
-    border-right: 0.5px solid #5a4025;
+    border-right: 0.5px solid black;
     border-bottom: none;
     border-left: none;
 }
 
 .bracket-div__three {
-    height: 10px;
-    width:19px;
+    height: 7px;
+    /* width:17px; */
     border: none;
 }
 
 .bracket-div__four {
-    height: 10px;
+    height: 6px;
     
-    border-top: 1px solid #5a4025;
+    border-top: 1px solid black;
     border-right: none;
     border-bottom: none;
-    border-left: 1px solid #5a4025;
+    border-left: 1px solid black;
 }
