@@ -7,8 +7,8 @@
 .tape-player {
     background-color: #d7d7d7;
     background-image: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
-    width: 460px;
-    height: 300px;
+    width: 75vw;
+    height: 50vw;
     position: relative;
     transition: ease all 0.1s;
     cursor: pointer;
@@ -21,29 +21,29 @@
     position: absolute;
     top: -5px;
     bottom: 0;
-    width: 10px;
-    height: 420px;
+    width: 2vw;
+    height: 70vw;
     border-radius: 0 0 2px 2px;
     background: repeating-linear-gradient(to right, rgb(85, 49, 36) 0px, rgb(65, 36, 24) 1px, rgb(75, 42, 30) 2px, rgb(82, 42, 29) 3px, rgb(74, 47, 38) 4px);
     z-index: -5;
 }
 
-.tape-player:before { left: -10px ;}
+.tape-player:before { left: -2vw ;}
 
-.tape-player:after { right: -10px; }
+.tape-player:after { right: -2vw; }
 
 .top {
     width: 100%;
-    height: 4px;
+    height: 1vw;
     background-image: linear-gradient(to right, #777676 0%, #d7d7d7 50%, #777676 100%); ;
 }
 
 .vents {
     width: 100%;
-    height: 20px;
+    height: 4vw;
     background-color: #333;
     background: repeating-linear-gradient(to bottom,
-            #000000 0px, #595858 5px);
+            #000000 0vw, #595858 1vw);
 }
 
 /*----------------------------------------------------------------------------------
@@ -55,18 +55,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 51px;
-    width: 101px;
-    border-radius: 5px;
+    height: 10vw;
+    width: 15vw;
+    border-radius: 1vw;
     background-color: black;
-    bottom: 20px;
+    bottom: 3vw;
     left: 0;
     right: 0;
     margin: auto;
     clip-path: ellipse(85% 100% at 50% 0%);
-    border-bottom-left-radius: 17px;
+    border-bottom-left-radius: 2.5vw;
     /* Adjust as needed */
-    border-bottom-right-radius: 17px;
+    border-bottom-right-radius: 2.5vw;
     /* Adjust as needed */
     z-index: 0;
 }
@@ -76,15 +76,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 48px;
-    width: 98px;
-    border-radius: 3px;
+    height: 94%;
+    width: 96%;
+    border-radius: .5vw;
     background-color: #d7d7d7;
-    background-image: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
+    background-image: linear-gradient(to right,  #777676 0%, #d7d7d7 50%, #777676 100%);
     clip-path: ellipse(85% 100% at 50% 0%);
-    border-bottom-left-radius: 15px;
+    border-bottom-left-radius: 2vw;
     /* Adjust as needed */
-    border-bottom-right-radius: 15px;
+    border-bottom-right-radius: 2vw;
     /* Adjust as needed */
     z-index: 1;
 }
@@ -95,18 +95,18 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 44px;
-    width: 94px;
-    border-radius: 4px;
+    height: 94%;
+    width: 96%;
+    border-radius: .5vw;
     background-color: #333;
     background: repeating-linear-gradient(to bottom,
-            #333 1px, #222 2px);
+            #333 0vw, #222 0.5vw);
 
     /* background: linear-gradient(to bottom, #333 0px, #222 2px, #333 4px, #222 6px, #333 8px, #222 10px, #333 12px, #222 14px, #333 16px, #222 18px, #333 20px, #222 22px, #333 24px, #222 26px, #333 28px, #222 30px, #333 32px, #222 34px, #333 36px, #222 38px, #333 40px, #222 42px, #333 44px, #222 46px, #333 48px); */
     clip-path: ellipse(85% 100% at 50% 0%);
-    border-bottom-left-radius: 14px;
+    border-bottom-left-radius: 1.5vw;
     /* Adjust as needed */
-    border-bottom-right-radius: 14px;
+    border-bottom-right-radius: 1.5vw;
     /* Adjust as needed */
     z-index: 2;
     /* padding: 3px; */
@@ -116,9 +116,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 90px;
+    width: 96%;
     padding: 1px 0;
-    font-size: 8px;
+    font-size: 1.25vw;
     text-transform: capitalize;
     border-radius: 2px;
     background: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
@@ -155,6 +155,10 @@
 
 .tape-reader__display {
     color: #333;
+    background-color: #272727;
+    border-radius: 1vw;
+    font-size: 2vw;
+    margin: 1vw;
 }
 
 .tape-player.playing .tape-reader__display {
@@ -169,12 +173,12 @@
 ----------------------------------------------------------------------------------*/
 
 .small-reel, .small-reel__two {
-    width: 15px;
-    height: 15px;
+    width: 2vw;
+    height: 2vw;
     background: white;
     background: radial-gradient(circle at 50%, #9a9a9a 0%, #acacac 20%, #bcbcbc 40%, #cccccc 60%, #dcdcdc 80%, #ececec 100%);
     position: absolute;
-    bottom: 20px;
+    bottom: 4vw;
     border-radius: 50%;
     box-shadow: 0 0 10px 3px #33333370;
     animation: rotating 2s linear infinite;
@@ -182,13 +186,13 @@
     border: 2px solid transparent;
 }
 
-.small-reel { left: 89px; }
+.small-reel { left: 16vw; }
 
-.small-reel__two { right: 89px; }
+.small-reel__two { right: 16vw; }
 
 .tape-player .circle {
     position: absolute;
-    width: 15px;
+    width: 2vw;
     height: 1px;
     background: #333;
     left: calc(-2px);
@@ -211,34 +215,34 @@
 }
 
 .tape-left {
-    bottom: 91px;
-    left: -1px;
-    width: 138px;
+    bottom: 14vw;
+    left: 2.3vw;
+    width: 20vw;
     height: 1px;
-    transform: rotateZ(71deg);   
+    transform: rotateZ(67deg);   
 }
 
 .tape-left__bottom {
-    bottom: 37px;
-    left: 93px;
-    width: 90px;
+    bottom: 6.5vw;
+    left: 16.5vw;
+    width: 14vw;
     height: 1px;
     transform: rotateZ(160deg);
 }
 
 .tape-right {
-    bottom: 80px;
-    right: -3px;
-    width: 130px;
+    bottom: 12vw;
+    right: 2.1vw;
+    width: 18vw;
     height: 1px;
-    transform: rotateZ(118deg);
+    transform: rotateZ(124.5deg);
     z-index: 0;
 }
 
 .tape-right__bottom {
-    bottom: 37px;
-    right: 93px;
-    width: 90px;
+    bottom: 6.5vw;
+    right: 16.5vw;
+    width: 14vw;
     height: 1px;
     transform: rotateZ(200deg);
 }
@@ -251,9 +255,9 @@
 .big-reel__container--left , .big-reel__container--right {
     position: absolute;
     border-radius: 50%;
-    height: 215px;
-    width: 215px;
-    top: 20px;
+    height: 35vw;
+    width: 35vw;
+    top: 4.5vw;
     animation: rotating 2s linear infinite;
     animation-play-state: paused;
 }
@@ -269,7 +273,7 @@
     width: 100%;
     background-color: rgba(253, 248, 232, 0.19);
     position: inherit;
-    box-shadow: 0 0 10px 3px #33333370;
+    box-shadow: 0 0 10px 3px #3333333a;
     animation: rotating 2s linear infinite;
     animation-play-state: paused;
     z-index: 3;
@@ -277,11 +281,11 @@
 
 .big-reel__back-plate--left, .big-reel__back-plate--right {
     border-radius: 50%;
-    height: 215px;
-    width: 215px;
+    height: 35vw;
+    width: 35vw;
     background-color: rgba(253, 248, 232, 0.19);
     position: absolute;
-    top: 20px;
+    top: 4.5vw;
     z-index: 0;
 }
 
@@ -293,21 +297,22 @@
     border-radius: 50%;
     position: inherit;
     background: repeating-radial-gradient(circle at 50%, black 0px, #333 2px);
+    box-shadow: 0 0 10px 3px #333333b4;
     z-index: 0;
 }
 
 .tape-role__left { 
-    top: calc(50% - 60px);
-    left: calc(50% - 60px);
-    height: 120px;
-    width: 120px;
+    top: calc(50% - 10vw);
+    left: calc(50% - 10vw);
+    height: 20vw;
+    width: 20vw;
  }
 
 .tape-role__right { 
-    top: calc(50% - 80px);
-    left: calc(50% - 80px);
-    height: 160px;
-    width: 160px;
+    top: calc(50% - 14vw);
+    left: calc(50% - 14vw);
+    height: 28vw;
+    width: 28vw;
  }
 
 .tape-player.has-tape>.small-reel,
@@ -375,13 +380,13 @@
 } */
 
 .tape-player .middle-hole {
-    width: 60px;
-    height: 60px;
+    width: 10vw;
+    height: 10vw;
     /* background-color: rgba(251, 250, 248, 0.626); */
     /* background: #333; */
-    background-image: linear-gradient(to right, #777676 0%, #d7d7d7 50%, #777676 100%);
-    top: calc(50% - 30px);
-    left: calc(50% - 30px);
+    background-image: linear-gradient(to bottom, #777676 0%, #d7d7d7 50%, #777676 100%);
+    top: calc(50% - 5vw);
+    left: calc(50% - 5vw);
     position: inherit;
     border-radius: 50%;
     /* border: 3px solid #555; */
@@ -392,8 +397,8 @@
 .middle-hole div {
     position: absolute;
     border-radius: 50%;
-    height: 8px;
-    width: 8px;
+    height: 1vw;
+    width: 1vw;
     z-index: 5;
 }
 
@@ -422,27 +427,27 @@
     position: absolute;
     border-radius: 50%;
     left: -5px;
-    top: 20px;
-    height: 215px;
-    width: 215px;
+    top: 4.5vw;
+    height: 35vw;
+    width: 35vw;
 }
 
 .mounting-pin__container-right {
     position: absolute;
     border-radius: 50%;
     right: -5px;
-    top: 20px;
-    height: 215px;
-    width: 215px;
+    top: 4.5vw;
+    height: 35vw;
+    width: 35vw;
 }
 
 .mounting-pin__left, .mounting-pin__right {
     position: inherit;
     border-radius: 50%;
-    top: calc(50% - 4px);
-    left: calc(50% - 4px);
-    height: 8px;
-    width: 8px;
+    top: calc(50% - 0.5vw);
+    left: calc(50% - 0.5vw);
+    height: 1vw;
+    width: 1vw;
     background-image: linear-gradient(to right, #606060 0%, #d7d7d7 50%, #606060 100%);
     box-shadow: 0 0 12px 3px #33333370;
     z-index: 3;

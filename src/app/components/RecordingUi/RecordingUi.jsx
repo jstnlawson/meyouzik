@@ -66,9 +66,9 @@ export default function RecordingUi() {
           <div className="tape-reader__layer-three">
             <div className="tape-reader__label">
               <span className="tape-reader__label__l-span">meyouzik</span>{" "}
-              <span className="tape-reader__label__r-span">a-2023</span>
+              <span className="tape-reader__label__r-span">a-2024</span>
             </div>
-            <div className="tape-reader__display text-xs my-1 uppercase">
+            <div className="tape-reader__display uppercase">
               recording
             </div>
           </div>

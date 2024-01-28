@@ -28,18 +28,21 @@ const InputUi = () => {
     }, []);
 
     return (
-        <div className='flex input-ui__container'>
-        <div className='flex flex-col justify-center items-center px-4 py-1 w-[230px] h-[80px]'>
+        <div className='flex input-ui__container p-2'>
+        <div className='flex flex-col justify-center items-center px-4 py-1 '>
+            <span className='text-black text-[.65rem] mb-1'>INPUT</span>
             <div className='flex input-label__container'>
-                <div className='input-label__one'>1</div>
+                {/* <div className='input-label__one'>1</div> */}
                 <div className='input-label__two'>2</div>
-                <div className='input-label__three'>3</div>
+                {/* <div className='input-label__three'>3</div> */}
             </div>
             <div className='mb-1 flex justify-bottom bracket-div__container'>
+            <div className='input-label__one'>1</div>
                 <div className='bracket-div__one'></div>
                 <div className='bracket-div__two'></div>
                 <div className='bracket-div__three'></div>
                 <div className='bracket-div__four'></div>
+                <div className='input-label__three'>3</div>
             </div>
             <input
                 type="range"
@@ -51,9 +54,9 @@ const InputUi = () => {
             />
             {/* <p>Position: {position}</p> */}
         </div>
-        <div className='flex justify-center items-center w-[230px] h-[80px] gap-3'>
-            <button className='text-black px-4 py-1 bg-orange-100'>▶</button>
-            <button className='text-black px-4 py-1 bg-orange-100'>⬛️</button>
+        <div className='flex justify-center items-center gap-3'>
+            {/* <button className='text-black px-4 py-1 bg-orange-100'>▶</button>
+            <button className='text-black px-4 py-1 bg-orange-100'>⬛️</button> */}
         </div>
         </div>
     );
