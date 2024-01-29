@@ -12,7 +12,7 @@ export default function Home() {
     <div className="px-5">
       <div className="py-5">
         <div className="flex flex-col justify-center items-center ">
-          <RecordingBooth />
+          {/* <RecordingBooth /> */}
           
           <RecordingUi />
           {/* <InputUi /> */}

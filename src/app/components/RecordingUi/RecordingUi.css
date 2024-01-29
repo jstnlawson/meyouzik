@@ -232,10 +232,10 @@
 
 .tape-right {
     bottom: 12vw;
-    right: 2.1vw;
+    right: 2.2vw;
     width: 18vw;
     height: 1px;
-    transform: rotateZ(124.5deg);
+    transform: rotateZ(124deg);
     z-index: 0;
 }
 
@@ -271,7 +271,7 @@
     border: 5px solid rgba(253, 248, 232, 0.15);
     height: 100%;
     width: 100%;
-    background-color: rgba(253, 248, 232, 0.19);
+    background-color: rgba(232, 237, 253, 0.275);
     position: inherit;
     box-shadow: 0 0 10px 3px #3333333a;
     animation: rotating 2s linear infinite;
@@ -403,24 +403,24 @@
 }
 
 .little-middle--one {
-    top: calc(33% - 4px);
-    left: calc(20% - 4px);
+    top: calc(33% - 0.5vw);
+    left: calc(20% - 0.5vw);
     background: repeating-linear-gradient(-45deg,
-            #333 1px, #565656 2px);
+            #333 0px, #565656 2px);
 }
 
 .little-middle--two {
-    top: calc(33% - 4px);
-    left: calc(80% - 4px);
+    top: calc(33% - 0.5vw);
+    left: calc(80% - 0.5vw);
     background: repeating-linear-gradient(45deg,
-            #333 1px, #565656 2px);
+            #333 0px, #565656 2px);
 }
 
 .little-middle--three {
-    top: calc(86% - 4px);
-    left: calc(50% - 4px);
+    top: calc(86% - 0.5vw);
+    left: calc(50% - 0.5vw);
     background: repeating-linear-gradient(to bottom,
-            #333 1px, #565656 2px);
+            #333 0px, #565656 2px);
 }
 
 .mounting-pin__container-left {

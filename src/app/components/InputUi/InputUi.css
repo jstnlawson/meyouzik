@@ -1,17 +1,23 @@
 .input-ui__container {
-    background-image: linear-gradient(to right, #a2a2a2 0%, #e7e7e7 50%, #a2a2a2 100%); ;
-
+    background-image: linear-gradient(to right, #a2a2a2 0%, #e7e7e7 50%, #a2a2a2 100%);
+    ;
 }
+
+/**********************************************************************************
+* Slider
+**********************************************************************************/
 
 .slider {
     -webkit-appearance: none;
     width: 8vw;
+    max-width: 70px;
     height: 2.5vw;
+    max-height: 24px;
     /* border-radius: 5px;   */
-    border-top: 0.5vw solid rgba(0, 0, 0, 0.517);
-    border-bottom: 0.5vw solid rgba(0, 0, 0, 0.517);
-    border-left: 0.75vw solid rgba(0, 0, 0, 0.201);
-    border-right: 0.75vw solid rgba(0, 0, 0, 0.201);
+    border-top: 3px solid rgba(0, 0, 0, 0.444);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.362);
+    border-left: 5px solid rgba(0, 0, 0, 0.201);
+    border-right: 5px solid rgba(0, 0, 0, 0.227);
     background: #e9e6e3;
     outline: none;
     opacity: 0.7;
@@ -26,7 +32,9 @@
     -webkit-appearance: none;
     appearance: none;
     width: 2.5vw;
+    max-width: 23px;
     height: 2.5vw;
+    max-height: 23px;
     border-radius: 5px;
     /* background: #b3b3b3; */
     cursor: grab;
@@ -38,7 +46,7 @@
     cursor: grabbing;
 }
 
-.input-label__container { 
+.input-label__container {
     align-items: end;
     margin-bottom: 0;
 }
@@ -56,17 +64,18 @@
     font-size: .55rem;
     /* font-weight: 500; */
     color: black;
-   line-height: 0;
+    line-height: 0;
 }
 
 .bracket-div__container {
-     align-items: end;
-     margin-top: 0;
-     }
+    align-items: end;
+    margin-top: 0;
+}
 
 /* .bracket-div__container div { width: 1vw;} */
 
-.input-label__one, .input-label__three{
+.input-label__one,
+.input-label__three {
     color: black;
     font-size: 0.55rem;
     text-align: center;
@@ -80,7 +89,7 @@
     border-right: 1px solid black;
     border-bottom: none;
     border-left: none;
-    
+
 }
 
 .bracket-div__two {
@@ -106,4 +115,96 @@
     border-right: none;
     border-bottom: none;
     border-left: 1px solid black;
+}
+
+/**********************************************************************************
+* Buttons
+**********************************************************************************/
+
+.btn-container {
+    height: fit-content;
+    border-top: 3px solid rgba(0, 0, 0, 0.314);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.225);
+    border-left: 5px solid rgba(0, 0, 0, 0.148);
+    border-right: 5px solid rgba(0, 0, 0, 0.104);
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    background-color: black;
+    color: antiquewhite;
+    font-size: 70%;
+    text-transform: uppercase;
+    height: 4vw;
+    max-height: 40px;
+    min-height: 20px;
+    width: 8vw;
+    max-width: 80px;
+    min-width: 40px;
+}
+
+.btn span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 3px;
+}
+
+.record-btn {
+    background-color: #a93428;
+    box-shadow:
+    inset 1px 1px 1px #dc7f75,
+    inset -1px -1px 1px #6d231a,
+    2px 2px 4px #000;
+}
+
+.record-btn:active {
+    transform: scale(.95);
+    color: rgb(216, 204, 188);
+    background-color: #892b21;
+    box-shadow:
+        inset 1px 1px 1px 0px rgba(255, 226, 226, 0.258),
+        inset 1px 1px 1px 0px transparent,
+        1px 1px 1px 0px transparent;
+}
+
+.stop-btn {
+    background-color: #333;
+    box-shadow:
+        inset 1px 1px 1px rgba(255, 226, 226, 0.258),
+        inset -1px -1px 1px rgb(10, 10, 10),
+        2px 2px 4px #000;
+}
+
+.stop-btn:active {
+    transform: scale(.95);
+    color: rgb(216, 204, 188);
+    background-color: #222;
+    box-shadow:
+        inset 1px 1px 1px 0px rgba(255, 226, 226, 0.258),
+        inset 1px 1px 1px 0px transparent,
+        1px 1px 1px 0px transparent;
+}
+
+.play-btn {
+    background-color: #196062;
+    box-shadow: 
+        inset 1px 1px 1px #7dc9d9,
+        inset -1px -1px 1px #0e3b4a,
+        2px 2px 4px #000;
+}
+
+.play-btn:active {
+    transform: scale(.95);
+    color: rgb(216, 204, 188);
+    background-color: #0e3b4a;
+    box-shadow:
+        inset 1px 1px 1px 0px rgba(255, 226, 226, 0.258),
+        inset 1px 1px 1px 0px transparent,
+        1px 1px 1px 0px transparent;
 }
