@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import "./RecordingUi.css";
-import InputUi from "../InputUi/InputUi.jsx";
+import Controls from "../Controls/Controls.jsx";
 import { Input } from "postcss";
 
 export default function RecordingUi() {
   const [isSpinning, setIsSpinning] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const playerClass = `tape-player has-tape ${isSpinning ? "playing" : ""}`;
 
   function togglePlaying() {
     setIsSpinning(!isSpinning);
+  }
 
-    // peaceful-mollusk-1h344iz2yhl86a3jr8bmidhk.herokudns.com
-
+  const tapeReaderLight = () => {
+    return isRecording ? "tape-reader__display--on" : "tape-reader__display--off";
   }
 
   return (
@@ -71,7 +73,7 @@ export default function RecordingUi() {
               <span className="tape-reader__label__l-span">meyouzik</span>{" "}
               <span className="tape-reader__label__r-span">a-2024</span>
             </div>
-            <div className="tape-reader__display uppercase">
+            <div className={tapeReaderLight()}>
               recording
             </div>
           </div>
@@ -82,7 +84,12 @@ export default function RecordingUi() {
       <div className="tape-right__bottom"></div>
     </div>
     <div className="button-panel">
-      <InputUi />
+      <Controls
+        isSpinning={isSpinning}
+        setIsSpinning={setIsSpinning}
+        isRecording={isRecording}
+        setIsRecording={setIsRecording}
+      />
     </div>
     </div>
   );

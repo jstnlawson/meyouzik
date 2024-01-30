@@ -3,7 +3,7 @@ import React from "react";
 import  AudioContextProvider  from "./components/AudioContextProvider/AudioContextProvider";
 import RecordingBooth from "./components/RecordingBooth/RecordingBooth";
 import RecordingUi from "./components/RecordingUi/RecordingUi";
-import InputUi from "./components/InputUi/InputUi";
+import InputUi from "./components/Controls/Controls";
 
 export default function Home() {
 

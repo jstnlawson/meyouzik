@@ -1,6 +1,5 @@
 .input-ui__container {
     background-image: linear-gradient(to right, #a2a2a2 0%, #e7e7e7 50%, #a2a2a2 100%);
-    ;
 }
 
 /**********************************************************************************
@@ -9,15 +8,15 @@
 
 .slider {
     -webkit-appearance: none;
-    width: 8vw;
-    max-width: 70px;
-    height: 2.5vw;
-    max-height: 24px;
+    width: 7vw;
+    max-width: 60px;
+    height: 2vw;
+    max-height: 20px;
     /* border-radius: 5px;   */
     border-top: 3px solid rgba(0, 0, 0, 0.444);
     border-bottom: 3px solid rgba(0, 0, 0, 0.362);
-    border-left: 5px solid rgba(0, 0, 0, 0.201);
-    border-right: 5px solid rgba(0, 0, 0, 0.227);
+    border-left: 4px solid rgba(0, 0, 0, 0.201);
+    border-right: 4px solid rgba(0, 0, 0, 0.227);
     background: #e9e6e3;
     outline: none;
     opacity: 0.7;
@@ -31,10 +30,10 @@
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 2.5vw;
-    max-width: 23px;
-    height: 2.5vw;
-    max-height: 23px;
+    width: 2vw;
+    max-width: 19px;
+    height: 2vw;
+    max-height: 19px;
     border-radius: 5px;
     /* background: #b3b3b3; */
     cursor: grab;
@@ -85,6 +84,7 @@
 .bracket-div__one {
     height: 6px;
     width: 1vw;
+    max-width: 12px;
     border-top: 1px solid black;
     border-right: 1px solid black;
     border-bottom: none;
@@ -95,6 +95,7 @@
 .bracket-div__two {
     height: 8px;
     width: 1.75vw;
+    max-width: 15px;
     border-top: none;
     border-right: 1px solid rgba(0, 0, 0, 0.4);
     border-bottom: none;
@@ -104,6 +105,7 @@
 .bracket-div__three {
     height: 8px;
     width: 1.75vw;
+    max-width: 15px;
     border: none;
     border-left: 1px solid rgba(0, 0, 0, 0.4);
 }
@@ -111,10 +113,61 @@
 .bracket-div__four {
     height: 6px;
     width: 1vw;
+    max-width: 12px;
     border-top: 1px solid black;
     border-right: none;
     border-bottom: none;
     border-left: 1px solid black;
+}
+
+/**********************************************************************************
+* Record and Play lights
+**********************************************************************************/
+
+.record-light__off, .play-light__off {
+    background-image: radial-gradient(11px 11px at 30% 50%, #aaaaaa, #111);
+    width: 1.25vw;
+    max-width: 11px;
+    min-width: 5px;
+    height: 1.25vw;
+    max-height: 11px;
+    min-height: 5px;
+    border-radius: 50%;
+    border: solid 2px #555;
+}
+
+.record-light__on {
+    background: rgb(255, 140, 140);
+    background-image: radial-gradient(red, transparent);
+    background-size: 5px 5px;
+    width: 1.25vw;
+    max-width: 11px;
+    min-width: 5px;
+    height: 1.25vw;
+    max-height: 11px;
+    min-height: 5px;
+    border-radius: 50%;
+    border: solid 2px #555;
+    box-shadow:
+        0 0 3px #111 inset,
+        0 0 10px red;
+}
+
+.play-light__on {
+    background: rgb(0, 198, 0);
+    background-image: radial-gradient(green, transparent);
+    background-size: 5px 5px;
+    width: 1.25vw;
+    max-width: 11px;
+    min-width: 5px;
+    height: 1.25vw;
+    max-height: 11px;
+    min-height: 5px;
+    border-radius: 50%;
+    border: solid 2px #555;
+    box-shadow:
+        0 0 3px #111 inset,
+        0 0 10px green;
 }
 
 /**********************************************************************************
@@ -123,27 +176,27 @@
 
 .btn-container {
     height: fit-content;
-    border-top: 3px solid rgba(0, 0, 0, 0.314);
-    border-bottom: 3px solid rgba(0, 0, 0, 0.225);
-    border-left: 5px solid rgba(0, 0, 0, 0.148);
-    border-right: 5px solid rgba(0, 0, 0, 0.104);
+    border-top: 2px solid rgba(0, 0, 0, 0.314);
+    border-bottom: 5px solid rgba(0, 0, 0, 0.225);
+    border-left: 4px solid rgba(0, 0, 0, 0.148);
+    border-right: 4px solid rgba(0, 0, 0, 0.104);
 }
 
 .btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid black;
-    background-color: black;
+    border: 2px solid #222;
+    background-color: #222;
     color: antiquewhite;
-    font-size: 70%;
+    font-size: 60%;
     text-transform: uppercase;
-    height: 4vw;
+    height: 3.4vw;
     max-height: 40px;
     min-height: 20px;
-    width: 8vw;
-    max-width: 80px;
-    min-width: 40px;
+    width: 5vw;
+    max-width: 60px;
+    min-width: 30px;
 }
 
 .btn span {
@@ -153,14 +206,15 @@
     height: 100%;
     width: 100%;
     border-radius: 3px;
+    margin: 0 2px;
 }
 
 .record-btn {
     background-color: #a93428;
     box-shadow:
-    inset 1px 1px 1px #dc7f75,
-    inset -1px -1px 1px #6d231a,
-    2px 2px 4px #000;
+        inset 1px 1px 1px #dc7f75,
+        inset -1px -1px 1px #6d231a,
+        2px 2px 4px #000;
 }
 
 .record-btn:active {
@@ -193,7 +247,7 @@
 
 .play-btn {
     background-color: #196062;
-    box-shadow: 
+    box-shadow:
         inset 1px 1px 1px #7dc9d9,
         inset -1px -1px 1px #0e3b4a,
         2px 2px 4px #000;
@@ -208,3 +262,8 @@
         inset 1px 1px 1px 0px transparent,
         1px 1px 1px 0px transparent;
 }
+
+/**********************************************************************************
+* VU Meter
+**********************************************************************************/
+

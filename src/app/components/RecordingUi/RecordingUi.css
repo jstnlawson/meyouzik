@@ -153,7 +153,7 @@
     box-shadow: 0 0 10px red;
 }
 
-.tape-reader__display {
+.tape-reader__display--off {
     color: #333;
     background-color: #272727;
     border-radius: 1vw;
@@ -161,9 +161,12 @@
     margin: 1vw;
 }
 
-.tape-player.playing .tape-reader__display {
+.tape-reader__display--on {
     color: red;
     background-color: #333;
+    border-radius: 1vw;
+    font-size: 2vw;
+    margin: 1vw;
     text-shadow: 0 0 5px red;
     transition: all 0.3s cubic-bezier(0.8, 1, 0.3, 0);
 }

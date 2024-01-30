@@ -1,8 +1,37 @@
 import React, { useState, useEffect } from "react";
-import "./InputUi.css";
+import "./Controls.css";
 
-const InputUi = () => {
+const controls = ({ isSpinning, setIsSpinning, isRecording, setIsRecording }) => {
   const [position, setPosition] = useState("middle");
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handleRecordBtn = () => {
+    setIsRecording(true);
+    setIsPlaying(false);
+    setIsSpinning(true);  
+  }
+
+  const handleStopBtn = () => {
+    setIsRecording(false);
+    setIsPlaying(false);
+    setIsSpinning(false);
+  }
+
+  const handlePlayBtn = () => {
+    setIsPlaying(true);
+    setIsRecording(false);
+    setIsSpinning(true);  
+  }
+
+  const recordLight = () => {
+    return isRecording ? 'record-light__on' : 'record-light__off';   
+ }
+
+ const playLight = () => {
+    return isPlaying ? 'play-light__on' : 'play-light__off';
+    }
+
+
 
   const autoPositionSlider = () => {
     const slider = document.querySelector('input[type="range"]');
@@ -28,8 +57,8 @@ const InputUi = () => {
   }, []);
 
   return (
-    <div className="flex input-ui__container p-2">
-      <div className="flex flex-col justify-center items-center px-4 py-1 ">
+    <div className="flex input-ui__container py-[3%] px-[10%] justify-between">
+      <div className="flex flex-col justify-center items-center py-1 ">
         <div className="flex input-label__container">
           {/* <div className='input-label__one'>1</div> */}
           <div className="input-label__two">2</div>
@@ -54,20 +83,29 @@ const InputUi = () => {
         <span className="text-black text-[.55rem] mt-1">INPUT</span>
       </div>
 
-      <div className="flex btn-container">
-        <button className="btn">
-            <span className="record-btn">rec</span>
-        </button>
-        <button className="btn">
-            <span className="stop-btn">stop</span>
-        </button>
-        <button className="btn">
-            <span className="play-btn">play</span>
-        </button>
+      <div className="vu-meter">
+
       </div>
 
+      <div className="flex flex-col w-fit-content ">
+        <div className="light-container flex justify-between px-[15%] pb-2">
+            <div className={recordLight()}></div>
+            <div className={playLight()}></div>
+        </div>
+        <div className="flex btn-container">
+          <button className="btn" onClick={handleRecordBtn}>
+            <span className="record-btn">rec</span>
+          </button>
+          <button className="btn" onClick={handleStopBtn} >
+            <span className="stop-btn">stop</span>
+          </button>
+          <button className="btn" onClick={handlePlayBtn}>
+            <span className="play-btn">play</span>
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default InputUi;
+export default controls;
