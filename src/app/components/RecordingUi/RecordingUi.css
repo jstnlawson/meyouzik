@@ -1,3 +1,7 @@
+/* .reel-to-reel__container {
+    max-height: 100vh;
+} */
+
 .tape-player * {
     transition: ease all 0.3s;
     user-select: none;
@@ -21,16 +25,16 @@
     position: absolute;
     top: -5px;
     bottom: 0;
-    width: 2vw;
-    height: 85vw;
+    width: 2.5vw;
+    height: 80vw;
     border-radius: 0 0 2px 2px;
-    background: repeating-linear-gradient(to right, rgb(85, 49, 36) 0px, rgb(65, 36, 24) 1px, rgb(75, 42, 30) 2px, rgb(82, 42, 29) 3px, rgb(74, 47, 38) 4px);
+    background: repeating-linear-gradient(to right, rgb(85, 49, 36) 0px, rgb(97, 53, 34) 2px, rgb(54, 30, 22) 4px, rgb(115, 57, 38) 3px, rgb(65, 42, 35) 6px, rgb(102, 51, 20) 8px);
     z-index: -5;
 }
 
-.tape-player:before { left: -2vw ;}
+.tape-player:before { left: -2.5vw ;}
 
-.tape-player:after { right: -2vw; }
+.tape-player:after { right: -2.5vw; }
 
 .top {
     width: 100%;
@@ -55,11 +59,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 10vw;
-    width: 15vw;
+    height: 12vw;
+    width: 19vw;
     border-radius: 1vw;
     background-color: black;
-    bottom: 3vw;
+    bottom: 1.5vw;
     left: 0;
     right: 0;
     margin: auto;
@@ -68,7 +72,7 @@
     /* Adjust as needed */
     border-bottom-right-radius: 2.5vw;
     /* Adjust as needed */
-    z-index: 0;
+    z-index: 2;
 }
 
 .tape-reader__layer-two {

@@ -1,20 +1,20 @@
-.input-ui__container {
+.middle-panel__container {
     background-image: linear-gradient(to right, #a2a2a2 0%, #e7e7e7 50%, #a2a2a2 100%);
 }
 
 .bottom-panel {
     background-image: linear-gradient(to right, #111 0%, #333 50%, #111 100%);
-
+z-index: 0;
 }
 
 .bottom-trim {
     width: 100%;
     height: 2vw;
-    background-image: linear-gradient(to right, #777676 0%, #bababa 50%, #777676 100%); 
+    background-image: linear-gradient(to right, #777676 0%, #bababa 50%, #777676 100%);
 }
 
 /**********************************************************************************
-* Slider
+* Input Selector 
 **********************************************************************************/
 
 .slider {
@@ -57,29 +57,19 @@
 }
 
 .input-label__container {
-    align-items: end;
-    margin-bottom: 0;
-}
-
-.input-label__container div {
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    /* align-items: end; */
-    /* border: 1px solid #354237; */
+    margin-bottom: 0;
     height: fit-content;
-    width: 3.5vw;
-    text-align: center;
     font-size: .55rem;
-    /* font-weight: 500; */
     color: black;
     line-height: 0;
 }
 
 .bracket-div__container {
-    align-items: end;
-    margin-top: 0;
+    align-items: flex-end;
+    margin: 0 0 1px 0;
 }
 
 /* .bracket-div__container div { width: 1vw;} */
@@ -132,10 +122,148 @@
 }
 
 /**********************************************************************************
-* Record and Play lights
+* Input Screen
 **********************************************************************************/
 
-.record-light__off, .play-light__off {
+.input-screen {
+    width: 20vw;
+    height: 6vw;
+    position: relative;
+    border: 1px solid rgb(177, 177, 177);
+    border-radius: 6px;
+    z-index: 0;
+}
+
+.input-screen__title {
+    position: absolute;
+    top: -1vw;
+    left: 1vw;
+    font-size: 0.5rem;
+    color: rgb(210, 210, 210);
+    background-color: #111;
+    background-image: linear-gradient(to right, #111 0%, #222 100%);
+    font-weight: 500;
+    padding: 0 0.25vw;
+    border-radius: 5px;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+.input-screen__layer-one {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 19vw;
+    height: 5vw;
+    background-color: #111;
+    border-top: 0.75vw solid #333;
+    border-bottom: 0.75vw solid rgb(120, 120, 120);
+    border-left: 0.5vw solid rgb(82, 82, 82);
+    border-right: 0.5vw solid rgb(82, 82, 82);
+    border-radius: 3px;
+    z-index: 0;
+}
+
+.input-screen__layer-two {
+    position: inherit;
+    overflow: hidden;
+    width: calc(100% - 1.5vw);
+    height: calc(100% - 2vw);
+    border: solid 1px #222;
+    color: #0dff007d; 
+    background-image: linear-gradient(to right, #333 0%, #555 50%, #333 100%);
+    border-radius: 1.5px;
+    padding: 3%;
+    font-size: 0.55rem;
+    font-family: monospace;
+    box-shadow: inset 0px 0px 5px #222222, inset -5px 0px 10px -3px #000000a5;
+    z-index: 1;
+
+}
+
+/**********************************************************************************
+* Mic Inputs
+**********************************************************************************/
+
+.mic-inputs__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 10vw;
+    height: fit-content;
+    position: relative;
+    border-top: 1px solid rgb(177, 177, 177);
+    border-radius: 6px;
+    padding: 5px;
+    margin-top: 1.5vw;
+    margin-bottom: 1vw;
+    z-index: 0;
+}
+
+.mic-inputs__title {
+    position: absolute;
+    top: -1vw;
+    left: 10%;
+    font-size: 0.5rem;
+    color: rgb(210, 210, 210);
+    background-color: #111;
+    background-image: linear-gradient(to right, #111 0%, #222 100%);
+    font-weight: 500;
+    padding: 0 0.125vw;
+    border-radius: 5px;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+.mic-inputs {
+    position: absolute;
+    top: 0.5vw;
+    left: 3.7vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5vw;
+    height: 2.5vw;
+    background-color: #000;
+    border-radius: 50%;
+}
+
+.mic-inputs:first-of-type {
+    left: -1.25vw;
+}
+
+.mic-inputs:last-of-type {
+    left: 8.75vw;
+}
+
+.mic-inputs__layer-one {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 80%;
+    background-image: linear-gradient(to right, #a2a2a2 0%, #e7e7e7 50%, #a2a2a2 100%);
+    border-radius: 50%;
+}
+
+.mic-inputs__layer-two {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 80%;
+    background-image: linear-gradient(to bottom, #000 0%, #333 50%, #666 100%);
+    border-radius: 50%;
+}
+/**********************************************************************************
+* Lights
+**********************************************************************************/
+
+.power-light__off,
+.mic-light__off,
+.record-light__off,
+.play-light__off {
     background-image: radial-gradient(11px 11px at 30% 50%, #aaaaaa, #111);
     width: 1.25vw;
     max-width: 11px;
@@ -165,7 +293,7 @@
 }
 
 .play-light__on {
-    background: rgb(0, 198, 0);
+    background: rgb(149, 254, 149);
     background-image: radial-gradient(green, transparent);
     background-size: 5px 5px;
     width: 1.25vw;
@@ -210,6 +338,23 @@
     min-width: 30px;
 }
 
+.vrt-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #222;
+    background-color: #222;
+    color: antiquewhite;
+    font-size: 60%;
+    text-transform: uppercase;
+    width: 2.5vw;
+    max-width: 30px;
+    min-width: 10px;
+    height: 4vw;
+    max-height: 45px;
+    min-height: 20px;
+}
+
 .btn span {
     display: flex;
     align-items: center;
@@ -218,6 +363,16 @@
     width: 100%;
     border-radius: 3px;
     margin: 0 2px;
+}
+
+.vrt-btn span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 3px;
+    margin: 2px 0;
 }
 
 .record-btn {
@@ -274,13 +429,31 @@
         1px 1px 1px 0px transparent;
 }
 
+.mic-btn {
+    background-color: #333;
+    box-shadow:
+        inset -1.5px 1.5px 1px rgba(255, 226, 226, 0.258),
+        inset 2px -2px 1px rgba(48, 48, 48, 0.509),
+        -2px 2px 4px #000;
+}
+
+.mic-btn:active {
+    transform: scale(.95);
+    color: rgb(216, 204, 188);
+    background-color: #222;
+    box-shadow:
+        inset -1px 1px 1px 0px rgb(56, 56, 56),
+        inset 1px -1px 1px 0px transparent,
+        -1px 1px 1px 0px transparent;
+}
+
 /**********************************************************************************
 * VU Meter
 **********************************************************************************/
 
 .vu-meter {
-    width: 18vw;
-    height: 13vw;
+    width: 17vw;
+    height: 12vw;
     position: relative;
     overflow: hidden;
 }
@@ -299,7 +472,7 @@
     left: 50%;
     /* transform: translateX(0%); */
     width: 100%;
-    z-index: 2; 
+    z-index: 2;
 }
 
 .vu-meter__needle {
@@ -326,12 +499,46 @@
     transform: translateX(-50%);
     text-align: center;
     width: 100%;
-    z-index: 1; /* Set a lower z-index for the text container */
+    z-index: 1;
+    /* Set a lower z-index for the text container */
+}
+
+.vu-meter__arch-container {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+    z-index: 1;
+    /* Set a lower z-index for the text container */
+}
+
+.vu-meter__arch--color {
+    position: absolute;
+    top: -3vw;
+    left: 1vw;
+  width: 15vw;
+  height: 9.5vw; /* Adjust the height as needed */
+  background: linear-gradient(to right, #bdbb98 10%, #3b39a7 60%, #a93428 80%, #bdbb98 90%);
+  overflow: hidden;
+  border-radius: 50% 50% 0 0;
+}
+
+.vu_meter__arch--overlap {
+    position: absolute;
+    top: -2vw;
+    left: 1.5vw;
+  width: 14vw;
+  height: 9.5vw; /* Adjust the height as needed */
+  background: linear-gradient(to right, #bdbb98 0%, #e8e7c9 50%, #bdbb98 100%);
+  overflow: hidden;
+  border-radius: 50% 50% 0 0;
 }
 
 .vu-meter__text {
-    font-size: 1.5vw;
-    color: #666;
+    font-size: 1.25vw;
+    color: #555;
     font-weight: 600;
     padding: 0.5vw;
     border-radius: 5px;
@@ -340,7 +547,7 @@
 .vu-meter__black-layer {
     position: absolute;
     height: 100%;
-    width: 100%; 
+    width: 100%;
     border-top: solid 2.5vw #444;
     border-right: solid 1.5vw #333;
     border-bottom: solid 2.5vw #222;
@@ -351,39 +558,39 @@
 .vu-meter__silver-layer {
     position: inherit;
     height: 97%;
-    width: 97%; 
-    border-top: solid 2vw #666;
-    border-right: solid 1vw #555;
-    border-bottom: solid 2vw #444;
-    border-left: solid 1vw #555;
+    width: 97%;
+    border-top: solid 2vw #c3c2c2;
+    border-right: solid 1vw #909090;
+    border-bottom: solid 2vw #777777;
+    border-left: solid 1vw #909090;
     margin-left: auto;
     margin-right: auto;
-    margin-top: .75%; 
+    margin-top: .75%;
     z-index: 4;
 }
 
 @keyframes metermove {
     from {
-        transform: rotate(35deg);
+        transform: rotate(-30deg);
     }
-    
+
+    20% {
+        transform: rotate(0deg);
+    }
+
     40% {
-        transform: rotate(-58deg);
+        transform: rotate(12deg);
     }
-    
+
     60% {
-        transform: rotate(52deg);
+        transform: rotate(5deg);
     }
-    
-    75% {
-        transform: rotate(-20deg);
+
+    80% {
+        transform: rotate(10deg);
     }
-    
-    90% {
-        transform: rotate(30deg);
-    }
-    
+
     to {
-        transform: rotate(35deg);
+        transform: rotate(-30deg);
     }
 }
