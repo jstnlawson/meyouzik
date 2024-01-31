@@ -22,7 +22,7 @@
     top: -5px;
     bottom: 0;
     width: 2vw;
-    height: 70vw;
+    height: 85vw;
     border-radius: 0 0 2px 2px;
     background: repeating-linear-gradient(to right, rgb(85, 49, 36) 0px, rgb(65, 36, 24) 1px, rgb(75, 42, 30) 2px, rgb(82, 42, 29) 3px, rgb(74, 47, 38) 4px);
     z-index: -5;
@@ -35,7 +35,7 @@
 .top {
     width: 100%;
     height: 1vw;
-    background-image: linear-gradient(to right, #777676 0%, #d7d7d7 50%, #777676 100%); ;
+    background-image: linear-gradient(to right, #777676 0%, #d7d7d7 50%, #777676 100%); 
 }
 
 .vents {
