@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Controls.css";
 
 const controls = ({
@@ -6,9 +6,18 @@ const controls = ({
   setIsSpinning,
   isRecording,
   setIsRecording,
+  allowMicrophone,
+  isMicrophoneAllowed,
+  setIsMicrophoneAllowed,
+  availableDevices,
+  setAvailableDevices,
+  selectedDevice,
+  setSelectedDevice,
+  handleSelectAudioDevice,
 }) => {
   const [position, setPosition] = useState("middle");
   const [isPlaying, setIsPlaying] = useState(false);
+  const inputScreenRef = useRef(null);
 
   const handleRecordBtn = () => {
     setIsRecording(true);
@@ -53,11 +62,29 @@ const controls = ({
     }
 
     setPosition(newPosition);
+
+    const selectedIndex = Math.floor((value / 100) * availableDevices.length);
+    // const selectedInput = availableDevices[selectedIndex];
+
+    // Check if selectedDevice is defined and has an 'id' property
+    if (availableDevices[selectedIndex] && availableDevices[selectedIndex].id) {
+      const selectedDevice = availableDevices[selectedIndex];
+      // Call handleSelectAudioDevice with the selected device
+      handleSelectAudioDevice(selectedDevice.id);
+    } else {
+      console.error(
+        "Selected device is undefined or does not have an id property"
+      );
+    }
   };
 
   useEffect(() => {
     autoPositionSlider();
   }, []);
+
+  function selectAudioInput(id) {
+    setSelectedDevice(id);
+  }
 
   return (
     <>
@@ -71,11 +98,11 @@ const controls = ({
             <div className="power-light__off mt-1"></div>
           </div>
           <div className="mic-btn__container flex flex-col justify-center items-center">
-          <span className="text-[.5rem] text-black">MIC</span>
-          <button className="vrt-btn">
-            <span className="mic-btn"></span>
-          </button>
-          <div className="mic-light__off mt-1"></div>
+            <span className="text-[.5rem] text-black">MIC</span>
+            <button className="vrt-btn" onClick={allowMicrophone}>
+              <span className="mic-btn"></span>
+            </button>
+            <div className="mic-light__off mt-1"></div>
           </div>
           <div className="input-selector__container flex-col">
             <div className="flex input-label__container">
@@ -130,10 +157,34 @@ const controls = ({
           <div className="input-screen flex justify-center items-center">
             <span className="input-screen__title">current input</span>
             <div className="input-screen__layer-one"></div>
-            <div className="input-screen__layer-two">
-              <span className="input-screen__text">
-                press mic button to allow access to your microphone...
-              </span>
+            <div className="input-screen__layer-two ">
+              {isMicrophoneAllowed === "prompt" && (
+                <>
+                  <span className="input-screen__text">
+                    press mic button to allow microphone access...
+                  </span>
+                </>
+              )}
+              {isMicrophoneAllowed === "granted" && (
+                <>
+                  {!selectedDevice ? (
+                    <span className="input-screen__text">
+                      Use the slider to select a microphone...
+                    </span>
+                  ) : (
+                    availableDevices.map((audioDevice) => (
+                      <div
+                        key={audioDevice.id}
+                        className={`input-screen__text ${
+                          selectedDevice === audioDevice.id ? "" : "hidden"
+                        }`}
+                      >
+                        {audioDevice.label}
+                      </div>
+                    ))
+                  )}
+                </>
+              )}
             </div>
           </div>
 
@@ -169,7 +220,10 @@ const controls = ({
               ></div>
             </div>
             <div className="vu-meter__arch-container">
-              <div className="vu-meter__arch--color"></div>
+              <div className="vu-meter__arch--color">
+                | | | | | | | | | | | | | | | | <br />| | | | | | | | | | | | |
+                | | | | | | | |
+              </div>
               <div className="vu_meter__arch--overlap"></div>
             </div>
             <div className="vu-meter__text-container">

@@ -3,12 +3,12 @@ import React, { useEffect, useState, useRef } from "react";
 import { useAudioContext } from "../AudioContextProvider/AudioContextProvider.jsx";
 import './RecordingBooth.css';
 import AudioPlayer from "../AudioPlayer/AudioPlayer.jsx";
+import RecordingUi from "../RecordingUi/RecordingUi.jsx";
 
 export default function RecordingBooth () {
 
   //const { audioContext } = useAudioContext();
   const { audioContext, initializeAudioContext } = useAudioContext();
-
   const [isMicrophoneAllowed, setIsMicrophoneAllowed] = useState("prompt");
   const [availableDevices, setAvailableDevices] = useState([]);
   const [selectedDevice, setSelectedDevice] = useState(null);
@@ -59,7 +59,7 @@ export default function RecordingBooth () {
       });
   }
 
-  function handleClickSelectAudioDevice(id) {
+  function handleSelectAudioDevice(id) {
     setSelectedDevice(id);
     console.log(id);
   }
@@ -149,7 +149,7 @@ export default function RecordingBooth () {
               .map((audioDevice) => (
                 <div
                   key={audioDevice.id}
-                  onClick={() => handleClickSelectAudioDevice(audioDevice.id)}
+                  onClick={() => handleSelectAudioDevice(audioDevice.id)}
                   className={`m-2 cursor-pointer text-black p-4 flex justify-center items-center bg-white rounded ${
                     selectedDevice === audioDevice.id
                       ? "bg-blue-500 text-green-500"
@@ -222,6 +222,16 @@ export default function RecordingBooth () {
           ))}
         </div>
       </div>
+      <RecordingUi 
+      allowMicrophone={allowMicrophone}
+      isMicrophoneAllowed={isMicrophoneAllowed}
+      setIsMicrophoneAllowed={setIsMicrophoneAllowed}
+      availableDevices={availableDevices}
+      setAvailableDevices={setAvailableDevices}
+      selectedDevice={selectedDevice}
+      setSelectedDevice={setSelectedDevice}
+      handleSelectAudioDevice={handleSelectAudioDevice}
+      />
     </div>
   );
 }

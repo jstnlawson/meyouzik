@@ -85,7 +85,7 @@ z-index: 0;
 .bracket-div__one {
     height: 6px;
     width: 1vw;
-    max-width: 12px;
+    max-width: 11px;
     border-top: 1px solid black;
     border-right: 1px solid black;
     border-bottom: none;
@@ -96,7 +96,7 @@ z-index: 0;
 .bracket-div__two {
     height: 8px;
     width: 1.75vw;
-    max-width: 15px;
+    max-width: 14px;
     border-top: none;
     border-right: 1px solid rgba(0, 0, 0, 0.4);
     border-bottom: none;
@@ -106,7 +106,7 @@ z-index: 0;
 .bracket-div__three {
     height: 8px;
     width: 1.75vw;
-    max-width: 15px;
+    max-width: 14px;
     border: none;
     border-left: 1px solid rgba(0, 0, 0, 0.4);
 }
@@ -167,15 +167,15 @@ z-index: 0;
 
 .input-screen__layer-two {
     position: inherit;
-    overflow: hidden;
+    overflow-y: auto;
     width: calc(100% - 1.5vw);
-    height: calc(100% - 2vw);
+    max-height: calc(100% - 2vw);
     border: solid 1px #222;
     color: #0dff007d; 
     background-image: linear-gradient(to right, #333 0%, #555 50%, #333 100%);
     border-radius: 1.5px;
     padding: 3%;
-    font-size: 0.55rem;
+    font-size: 0.6rem;
     font-family: monospace;
     box-shadow: inset 0px 0px 5px #222222, inset -5px 0px 10px -3px #000000a5;
     z-index: 1;
@@ -224,7 +224,9 @@ z-index: 0;
     justify-content: center;
     align-items: center;
     width: 2.5vw;
+    max-width: 35px;
     height: 2.5vw;
+    max-height: 35px;
     background-color: #000;
     border-radius: 50%;
 }
@@ -480,16 +482,8 @@ z-index: 0;
     height: 9.5vw;
     background: #000000;
     filter: drop-shadow(2px -2px 4px rgba(0, 0, 0, .6));
-    /* border-top: solid 2px black;
-    border-bottom: 9.5vw solid #000000;
-    border-left: 1px solid rgb(0, 128, 0);
-    border-right: 1px solid rgba(255, 255, 0, 0); */
     transform: rotate(-45deg);
     transform-origin: center bottom;
-}
-
-.vu-meter__needle.is-spinning {
-    animation: metermove 3s ease-out infinite;
 }
 
 .vu-meter__text-container {
@@ -500,7 +494,6 @@ z-index: 0;
     text-align: center;
     width: 100%;
     z-index: 1;
-    /* Set a lower z-index for the text container */
 }
 
 .vu-meter__arch-container {
@@ -511,7 +504,6 @@ z-index: 0;
     text-align: center;
     width: 100%;
     z-index: 1;
-    /* Set a lower z-index for the text container */
 }
 
 .vu-meter__arch--color {
@@ -520,9 +512,11 @@ z-index: 0;
     left: 1vw;
   width: 15vw;
   height: 9.5vw; /* Adjust the height as needed */
+  color: #bdbb98;
   background: linear-gradient(to right, #bdbb98 10%, #3b39a7 60%, #a93428 80%, #bdbb98 90%);
   overflow: hidden;
   border-radius: 50% 50% 0 0;
+  line-height: 15px;
 }
 
 .vu_meter__arch--overlap {
@@ -538,7 +532,7 @@ z-index: 0;
 
 .vu-meter__text {
     font-size: 1.25vw;
-    color: #555;
+    color: #604736;
     font-weight: 600;
     padding: 0.5vw;
     border-radius: 5px;
@@ -569,9 +563,17 @@ z-index: 0;
     z-index: 4;
 }
 
-@keyframes metermove {
+.vu-meter__needle.is-spinning {
+    animation: needle-move 5s ease-out infinite alternate;
+}
+
+.vu-meter__needle:not(.is-spinning) {
+    animation: needle-return 1s ease-out forwards;
+}
+
+@keyframes needle-move {
     from {
-        transform: rotate(-30deg);
+        transform: rotate(-15deg);
     }
 
     20% {
@@ -591,6 +593,15 @@ z-index: 0;
     }
 
     to {
-        transform: rotate(-30deg);
+        transform: rotate(-5deg);
+    }
+}
+
+@keyframes needle-return {
+    from {
+        transform: rotate(-5deg);
+    }
+    to {
+        transform: rotate(-45deg);
     }
 }
