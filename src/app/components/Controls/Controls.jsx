@@ -4,8 +4,8 @@ import "./Controls.css";
 const controls = ({
   isSpinning,
   setIsSpinning,
-  isRecording,
-  setIsRecording,
+  isRecordPressed,
+  setIsRecordPressed,
   allowMicrophone,
   isMicrophoneAllowed,
   setIsMicrophoneAllowed,
@@ -14,31 +14,45 @@ const controls = ({
   selectedDevice,
   setSelectedDevice,
   handleSelectAudioDevice,
+  isRecording,
+  setIsRecording,
+  startRecording,
+  stopRecording,
+  savedAudioData,
+  setSavedAudioData,
+  playAudio,
+  stopAudio,
 }) => {
   const [position, setPosition] = useState("middle");
   const [isPlaying, setIsPlaying] = useState(false);
   const inputScreenRef = useRef(null);
 
   const handleRecordBtn = () => {
-    setIsRecording(true);
+    setIsRecordPressed(true);
     setIsPlaying(false);
     setIsSpinning(true);
+    startRecording();
   };
 
   const handleStopBtn = () => {
-    setIsRecording(false);
+    setIsRecordPressed(false);
     setIsPlaying(false);
     setIsSpinning(false);
+    if (isMicrophoneAllowed === "granted" && isRecording) {
+      stopRecording();
+    }
+    stopAudio();
   };
 
   const handlePlayBtn = () => {
     setIsPlaying(true);
-    setIsRecording(false);
+    setIsRecordPressed(false);
     setIsSpinning(true);
+    playAudio();
   };
 
   const recordLight = () => {
-    return isRecording ? "record-light__on" : "record-light__off";
+    return isRecordPressed ? "record-light__on" : "record-light__off";
   };
 
   const playLight = () => {
@@ -169,7 +183,7 @@ const controls = ({
                 <>
                   {!selectedDevice ? (
                     <span className="input-screen__text">
-                      Use the slider to select a microphone...
+                      Use the line slider to select a microphone...
                     </span>
                   ) : (
                     availableDevices.map((audioDevice) => (
@@ -234,7 +248,50 @@ const controls = ({
           </div>
         </div>
 
-        <div className="bottom-panel__right flex w-[33%] justify-center"></div>
+        <div className="bottom-panel__right flex w-[33%] justify-center">
+          <div className="input-screen flex justify-center items-center">
+            <span className="input-screen__title">sample</span>
+            <div className="input-screen__layer-one"></div>
+            <div className="input-screen__layer-two ">
+              {isMicrophoneAllowed === "granted" &&
+                !isRecording &&
+                selectedDevice && (
+                  <>
+                    <span className="input-screen__text">
+                      Press record to make a sample
+                    </span>
+                  </>
+                )}
+              {savedAudioData.map((audioBuffer, index) => (
+                <ul key={index}>
+                  <li className="p-1 flex justify-center items-center bg-white rounded">
+                    <p className="mr-2 text-black text-[.5rem]">
+                      Sample {index + 1}
+                    </p>
+                    <button
+                      onClick={() => playAudio(index)}
+                      className="text-black text-[.4rem] bg-green-500 p-1"
+                    >
+                      Play
+                    </button>
+                    <button
+                      onClick={ () => stopAudio(index)}
+                      className="text-black text-[.4rem] bg-red-500 p-1"
+                    >
+                      Stop
+                    </button>
+                    <button
+                      className="bg-white text-black text-[.75rem] p-1 ml-2"
+                      onClick={() => deleteAudio(index)}
+                    >
+                      🅇
+                    </button>
+                  </li>
+                </ul>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="bottom-trim"></div>

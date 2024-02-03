@@ -1,23 +1,28 @@
 'use client';
+import React, { useEffect, useState, useRef } from "react";
 import { useAudioContext } from "../AudioContextProvider/AudioContextProvider.jsx";
+import RecordingBooth from "../RecordingBooth/RecordingBooth.jsx";
 
 
 export default function AudioPlayer({ audioBuffer }) {
     //const { audioContext } = useAudioContext();
     const { audioContext, initializeAudioContext } = useAudioContext();
+    const [savedAudioData, setSavedAudioData] = useState([]);
+
 
     let source = null;
   
-    const playAudio = () => {
-      if (audioBuffer && audioContext) {
+    const playAudio = (index) => {
+      const selectedBuffer = savedAudioData[index];
+      if (selectedBuffer && audioContext) {
         source = audioContext.createBufferSource();
-        source.buffer = audioBuffer;
+        source.buffer = selectedBuffer;
         source.connect(audioContext.destination);
         source.start();
       }
     };
   
-    const stopAudio = () => {
+    const stopAudio = (index) => {
       if (source) {
         source.stop();
         source = null;
@@ -26,8 +31,12 @@ export default function AudioPlayer({ audioBuffer }) {
   
     return (
       <div>
-        <button onClick={playAudio} className="text-black bg-green-500 p-2 m-2">Play</button>
-        <button onClick={stopAudio} className="text-black bg-red-500 p-2 m-2">Stop</button>
+        <RecordingBooth
+        playAudio={playAudio}
+        stopAudio={stopAudio}
+        savedAudioData={savedAudioData}
+        setSavedAudioData={setSavedAudioData}
+        />
       </div>
     );
   }

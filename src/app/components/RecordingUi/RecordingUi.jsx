@@ -12,9 +12,17 @@ export default function RecordingUi({
   selectedDevice,
   setSelectedDevice,
   handleSelectAudioDevice,
+  isRecording,
+  setIsRecording,
+  startRecording,
+  stopRecording,
+  savedAudioData,
+  setSavedAudioData,
+  playAudio,
+  stopAudio,
 }) {
   const [isSpinning, setIsSpinning] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
+  const [isRecordPressed, setIsRecordPressed] = useState(false);
   const playerClass = `tape-player has-tape ${isSpinning ? "playing" : ""}`;
 
   function togglePlaying() {
@@ -22,7 +30,7 @@ export default function RecordingUi({
   }
 
   const tapeReaderLight = () => {
-    return isRecording
+    return isRecordPressed
       ? "tape-reader__display--on"
       : "tape-reader__display--off";
   };
@@ -95,8 +103,8 @@ export default function RecordingUi({
         <Controls
           isSpinning={isSpinning}
           setIsSpinning={setIsSpinning}
-          isRecording={isRecording}
-          setIsRecording={setIsRecording}
+          isRecordPressed={isRecordPressed}
+          setIsRecordPressed={setIsRecordPressed}
           allowMicrophone={allowMicrophone}
           isMicrophoneAllowed={isMicrophoneAllowed}
           setIsMicrophoneAllowed={setIsMicrophoneAllowed}
@@ -105,6 +113,14 @@ export default function RecordingUi({
           selectedDevice={selectedDevice}
           setSelectedDevice={setSelectedDevice}
           handleSelectAudioDevice={handleSelectAudioDevice}
+          isRecording={isRecording}
+          setIsRecording={setIsRecording}
+          startRecording={startRecording}
+          stopRecording={stopRecording}
+          savedAudioData={savedAudioData}
+          setSavedAudioData={setSavedAudioData}
+          playAudio={playAudio}
+          stopAudio={stopAudio}
         />
       </div>
     </div>

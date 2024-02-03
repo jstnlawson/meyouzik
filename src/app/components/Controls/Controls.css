@@ -169,7 +169,7 @@ z-index: 0;
     position: inherit;
     overflow-y: auto;
     width: calc(100% - 1.5vw);
-    max-height: calc(100% - 2vw);
+    height: calc(100% - 2vw);
     border: solid 1px #222;
     color: #0dff007d; 
     background-image: linear-gradient(to right, #333 0%, #555 50%, #333 100%);
@@ -255,7 +255,7 @@ z-index: 0;
     align-items: center;
     width: 80%;
     height: 80%;
-    background-image: linear-gradient(to bottom, #000 0%, #333 50%, #666 100%);
+    background-image: linear-gradient(to bottom, #000 0%, #333 50%, #888 100%);
     border-radius: 50%;
 }
 /**********************************************************************************

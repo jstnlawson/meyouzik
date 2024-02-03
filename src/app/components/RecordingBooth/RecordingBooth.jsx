@@ -1,19 +1,16 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import { useAudioContext } from "../AudioContextProvider/AudioContextProvider.jsx";
-import './RecordingBooth.css';
-import AudioPlayer from "../AudioPlayer/AudioPlayer.jsx";
+import "./RecordingBooth.css";
 import RecordingUi from "../RecordingUi/RecordingUi.jsx";
 
-export default function RecordingBooth () {
-
+export default function RecordingBooth({ playAudio, stopAudio,  savedAudioData, setSavedAudioData}) {
   //const { audioContext } = useAudioContext();
   const { audioContext, initializeAudioContext } = useAudioContext();
   const [isMicrophoneAllowed, setIsMicrophoneAllowed] = useState("prompt");
   const [availableDevices, setAvailableDevices] = useState([]);
   const [selectedDevice, setSelectedDevice] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
-  const [savedAudioData, setSavedAudioData] = useState([]);
 
   let recordedChunks = useRef([]);
   let mediaRecorderRef = useRef(null);
@@ -65,28 +62,33 @@ export default function RecordingBooth () {
   }
 
   function stopRecording() {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+    if (
+      mediaRecorderRef.current &&
+      mediaRecorderRef.current.state !== "inactive"
+    ) {
       mediaRecorderRef.current.stop();
       mediaRecorderRef.current.onstop = async () => {
-        const audioBlob = new Blob(recordedChunks.current, { type: "audio/webm" });
+        const audioBlob = new Blob(recordedChunks.current, {
+          type: "audio/webm",
+        });
         const arrayBuffer = await audioBlob.arrayBuffer();
-  
+
         // Check if audioContext is initialized
         if (!audioContext) {
           console.error("AudioContext not initialized");
           return; // Or initialize it here if appropriate
         }
-  
+
         try {
           const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
           setSavedAudioData((prev) => [...prev, audioBuffer]);
         } catch (error) {
           console.error("Error decoding audio data", error);
         }
-  
+
         recordedChunks.current = [];
         if (streamRef.current) {
-          streamRef.current.getTracks().forEach(track => track.stop());
+          streamRef.current.getTracks().forEach((track) => track.stop());
         }
       };
     } else {
@@ -94,35 +96,40 @@ export default function RecordingBooth () {
     }
     setIsRecording(false);
   }
-  
-  
 
   function startRecording() {
-     // Ensure AudioContext is initialized
-  if (!audioContext) {
-    initializeAudioContext(); // This should be a method to initialize your audioContext
-  }
+    // Ensure AudioContext is initialized
+    if (!audioContext) {
+      initializeAudioContext(); // This should be a method to initialize your audioContext
+    }
     setIsRecording(true);
     console.log("Recording started");
-    const audioConfig = selectedDevice && selectedDevice.length > 0
-      ? { deviceId: { exact: selectedDevice } }
-      : true;
+    const audioConfig =
+      selectedDevice && selectedDevice.length > 0
+        ? { deviceId: { exact: selectedDevice } }
+        : true;
 
     navigator.mediaDevices
       .getUserMedia({ audio: audioConfig, video: false })
       .then((obtainedStream) => {
         streamRef.current = obtainedStream;
         const options = { mimeType: "audio/webm" };
-        
-        mediaRecorderRef.current = new MediaRecorder(streamRef.current, options);
+
+        mediaRecorderRef.current = new MediaRecorder(
+          streamRef.current,
+          options
+        );
 
         recordedChunks.current = [];
-        
-        mediaRecorderRef.current.addEventListener("dataavailable", function (e) {
-          if (e.data.size > 0) {
-            recordedChunks.current.push(e.data);
+
+        mediaRecorderRef.current.addEventListener(
+          "dataavailable",
+          function (e) {
+            if (e.data.size > 0) {
+              recordedChunks.current.push(e.data);
+            }
           }
-        });
+        );
 
         mediaRecorderRef.current.start();
       })
@@ -132,9 +139,10 @@ export default function RecordingBooth () {
       });
   }
 
-
   function deleteAudio(index) {
-    setSavedAudioData((prevAudioData) => prevAudioData.filter((_, i) => i !== index));
+    setSavedAudioData((prevAudioData) =>
+      prevAudioData.filter((_, i) => i !== index)
+    );
   }
 
   return (
@@ -144,9 +152,8 @@ export default function RecordingBooth () {
           {isMicrophoneAllowed === "granted" && (
             <>
               <p>Please select a microphone input</p>
-              
-              {availableDevices
-              .map((audioDevice) => (
+
+              {availableDevices.map((audioDevice) => (
                 <div
                   key={audioDevice.id}
                   onClick={() => handleSelectAudioDevice(audioDevice.id)}
@@ -157,7 +164,6 @@ export default function RecordingBooth () {
                   }`}
                 >
                   <span className="cursor-pointer">{audioDevice.label}</span>
-                  
                 </div>
               ))}
             </>
@@ -210,7 +216,18 @@ export default function RecordingBooth () {
             <ul key={index}>
               <li className="p-4 flex justify-center items-center bg-white rounded">
                 <p className="mr-4 text-black">Sample {index + 1}</p>
-                <AudioPlayer audioBuffer={audioBuffer} />
+                <button
+                  onClick={ () => playAudio(index) }
+                  className="text-black text-[.4rem] bg-green-500 p-1"
+                >
+                  Play
+                </button>
+                <button
+                  onClick={ () => stopAudio(index)}
+                  className="text-black text-[.4rem] bg-red-500 p-1"
+                >
+                  Stop
+                </button>
                 <button
                   className="bg-white text-black p-1 ml-4"
                   onClick={() => deleteAudio(index)}
@@ -222,15 +239,23 @@ export default function RecordingBooth () {
           ))}
         </div>
       </div>
-      <RecordingUi 
-      allowMicrophone={allowMicrophone}
-      isMicrophoneAllowed={isMicrophoneAllowed}
-      setIsMicrophoneAllowed={setIsMicrophoneAllowed}
-      availableDevices={availableDevices}
-      setAvailableDevices={setAvailableDevices}
-      selectedDevice={selectedDevice}
-      setSelectedDevice={setSelectedDevice}
-      handleSelectAudioDevice={handleSelectAudioDevice}
+      <RecordingUi
+        allowMicrophone={allowMicrophone}
+        isMicrophoneAllowed={isMicrophoneAllowed}
+        setIsMicrophoneAllowed={setIsMicrophoneAllowed}
+        availableDevices={availableDevices}
+        setAvailableDevices={setAvailableDevices}
+        selectedDevice={selectedDevice}
+        setSelectedDevice={setSelectedDevice}
+        handleSelectAudioDevice={handleSelectAudioDevice}
+        isRecording={isRecording}
+        setIsRecording={setIsRecording}
+        startRecording={startRecording}
+        stopRecording={stopRecording}
+        savedAudioData={savedAudioData}
+        setSavedAudioData={setSavedAudioData}
+        playAudio={playAudio}
+        stopAudio={stopAudio}
       />
     </div>
   );
