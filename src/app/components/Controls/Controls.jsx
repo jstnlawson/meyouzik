@@ -22,10 +22,14 @@ const controls = ({
   setSavedAudioData,
   playAudio,
   stopAudio,
+  deleteAudio,
+  isAudioPlaying,
+  setIsAudioPlaying,
 }) => {
   const [position, setPosition] = useState("middle");
   const [isPlaying, setIsPlaying] = useState(false);
-  const inputScreenRef = useRef(null);
+  const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
+  const audioRef = useRef(new Audio());
 
   const handleRecordBtn = () => {
     setIsRecordPressed(true);
@@ -48,7 +52,10 @@ const controls = ({
     setIsPlaying(true);
     setIsRecordPressed(false);
     setIsSpinning(true);
-    playAudio();
+    playAudio(currentAudioIndex);
+    // if (isAudioPlaying === false) {
+    //   handleStopBtn();  
+    // }
   };
 
   const recordLight = () => {
@@ -92,9 +99,35 @@ const controls = ({
     }
   };
 
+  const handlePreviousBtn = () => {
+    console.log("index in previous", currentAudioIndex);
+    if (currentAudioIndex > 0) {
+      setCurrentAudioIndex(currentAudioIndex - 1);
+      stopAudio();
+    }
+  };
+
+  const handleNextBtn = () => {
+    console.log("index in next", currentAudioIndex);
+    if (currentAudioIndex < savedAudioData.length - 1) {
+      setCurrentAudioIndex(currentAudioIndex + 1);
+      stopAudio();
+    }
+  };
+
   useEffect(() => {
     autoPositionSlider();
   }, []);
+
+  const prevIsAudioPlaying = useRef(false);
+  useEffect(() => {
+    if (!isAudioPlaying && prevIsAudioPlaying.current) {
+      handleStopBtn();
+    }
+    prevIsAudioPlaying.current = isAudioPlaying;
+  }, [isAudioPlaying, handleStopBtn]);
+  
+  
 
   function selectAudioInput(id) {
     setSelectedDevice(id);
@@ -248,12 +281,12 @@ const controls = ({
           </div>
         </div>
 
-        <div className="bottom-panel__right flex w-[33%] justify-center">
+        <div className="bottom-panel__right flex flex-col w-[33%] justify-center">
           <div className="input-screen flex justify-center items-center">
             <span className="input-screen__title">sample</span>
             <div className="input-screen__layer-one"></div>
             <div className="input-screen__layer-two ">
-              {isMicrophoneAllowed === "granted" &&
+              {isMicrophoneAllowed === "granted" && !savedAudioData.length &&
                 !isRecording &&
                 selectedDevice && (
                   <>
@@ -264,24 +297,24 @@ const controls = ({
                 )}
               {savedAudioData.map((audioBuffer, index) => (
                 <ul key={index}>
-                  <li className="p-1 flex justify-center items-center bg-white rounded">
+                  <li className="p-1 flex justify-center items-center bg-white rounded mb-1">
                     <p className="mr-2 text-black text-[.5rem]">
-                      Sample {index + 1}
+                      S-{index + 1}
                     </p>
                     <button
                       onClick={() => playAudio(index)}
-                      className="text-black text-[.4rem] bg-green-500 p-1"
+                      className="text-black text-[.4rem] bg-green-500 p-[1px]"
                     >
                       Play
                     </button>
                     <button
                       onClick={ () => stopAudio(index)}
-                      className="text-black text-[.4rem] bg-red-500 p-1"
+                      className="text-black text-[.4rem] bg-red-500 p-[1px]"
                     >
                       Stop
                     </button>
                     <button
-                      className="bg-white text-black text-[.75rem] p-1 ml-2"
+                      className="bg-white text-black text-[.65rem] p-1 ml-2"
                       onClick={() => deleteAudio(index)}
                     >
                       🅇
@@ -290,6 +323,20 @@ const controls = ({
                 </ul>
               ))}
             </div>
+          </div>
+          <div className="select-file__container">
+          <button className="previous-button" onClick={handlePreviousBtn}>
+            <span className="previous-button-inside">˂</span>
+          </button>
+          <button className="next-button" onClick={handleNextBtn}>
+            <span className="next-button-inside">˃</span>
+          </button>
+          {/* <button className="next-button">
+            <span className="next-button-inside">✉</span>
+          </button>
+          <button className="next-button">
+            <span className="next-button-inside">x</span>
+          </button> */}
           </div>
         </div>
       </div>

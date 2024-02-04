@@ -5,27 +5,71 @@ import RecordingBooth from "../RecordingBooth/RecordingBooth.jsx";
 
 
 export default function AudioPlayer({ audioBuffer }) {
-    //const { audioContext } = useAudioContext();
+    
     const { audioContext, initializeAudioContext } = useAudioContext();
     const [savedAudioData, setSavedAudioData] = useState([]);
 
 
     let source = null;
-  
+    let audioRef = useRef(null);  
+
+    // const playAudio = (index) => {
+    //   console.log("Playing audio at index:", index);
+    //   const selectedBuffer = savedAudioData[index];
+    //   if (selectedBuffer && audioContext) {
+    //     source = audioContext.createBufferSource();
+    //     source.buffer = selectedBuffer;
+    //     source.connect(audioContext.destination);
+    //     source.start();
+
+    //     audioRef.current = source;
+    //   }
+    // };
+
+    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+
     const playAudio = (index) => {
+      console.log("Playing audio at index:", index);
       const selectedBuffer = savedAudioData[index];
       if (selectedBuffer && audioContext) {
         source = audioContext.createBufferSource();
         source.buffer = selectedBuffer;
         source.connect(audioContext.destination);
+        source.onended = () => {
+          console.log("Audio playback ended");
+          console.log("isAudioPlaying", isAudioPlaying);
+          setIsAudioPlaying(false);
+          // You can add any additional logic here
+        };
+  
+        setIsAudioPlaying(true);
+  
+        const logWhilePlaying = () => {
+          if (isAudioPlaying) {
+            console.log("Audio is playing...");
+            requestAnimationFrame(logWhilePlaying);
+          }
+        };
+  
         source.start();
+        logWhilePlaying();
+  
+        audioRef.current = source;
       }
     };
   
-    const stopAudio = (index) => {
-      if (source) {
-        source.stop();
-        source = null;
+    // const stopAudio = (index) => {
+    //   if (source) {
+    //     source.stop();
+    //     source = null;
+    //   }
+    // };
+
+    const stopAudio = () => {
+      console.log("Stopping audio");
+      if (audioRef.current) {
+        audioRef.current.stop();
+        audioRef.current = null;
       }
     };
   
@@ -36,6 +80,8 @@ export default function AudioPlayer({ audioBuffer }) {
         stopAudio={stopAudio}
         savedAudioData={savedAudioData}
         setSavedAudioData={setSavedAudioData}
+        isAudioPlaying={isAudioPlaying}
+        setIsAudioPlaying={setIsAudioPlaying}
         />
       </div>
     );

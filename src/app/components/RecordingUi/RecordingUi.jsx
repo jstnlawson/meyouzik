@@ -20,6 +20,9 @@ export default function RecordingUi({
   setSavedAudioData,
   playAudio,
   stopAudio,
+  deleteAudio,
+  isAudioPlaying,
+  setIsAudioPlaying
 }) {
   const [isSpinning, setIsSpinning] = useState(false);
   const [isRecordPressed, setIsRecordPressed] = useState(false);
@@ -121,6 +124,9 @@ export default function RecordingUi({
           setSavedAudioData={setSavedAudioData}
           playAudio={playAudio}
           stopAudio={stopAudio}
+          deleteAudio={deleteAudio}
+          isAudioPlaying={isAudioPlaying}
+          setIsAudioPlaying={setIsAudioPlaying}
         />
       </div>
     </div>

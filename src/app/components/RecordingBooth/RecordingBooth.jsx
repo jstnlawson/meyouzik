@@ -4,7 +4,14 @@ import { useAudioContext } from "../AudioContextProvider/AudioContextProvider.js
 import "./RecordingBooth.css";
 import RecordingUi from "../RecordingUi/RecordingUi.jsx";
 
-export default function RecordingBooth({ playAudio, stopAudio,  savedAudioData, setSavedAudioData}) {
+export default function RecordingBooth({ 
+  playAudio, 
+  stopAudio,  
+  savedAudioData, 
+  setSavedAudioData,
+  isAudioPlaying,
+  setIsAudioPlaying,
+}) {
   //const { audioContext } = useAudioContext();
   const { audioContext, initializeAudioContext } = useAudioContext();
   const [isMicrophoneAllowed, setIsMicrophoneAllowed] = useState("prompt");
@@ -145,6 +152,18 @@ export default function RecordingBooth({ playAudio, stopAudio,  savedAudioData, 
     );
   }
 
+  useEffect(() => {
+    // Existing code...
+  
+    // Ensure AudioContext is initialized
+    if (!audioContext) {
+      initializeAudioContext(); // This should be a method to initialize your audioContext
+    }
+  
+    // Existing code...
+  }, [audioContext, initializeAudioContext, savedAudioData]);
+  
+
   return (
     <div className="px-5">
       <div className="py-5">
@@ -256,6 +275,9 @@ export default function RecordingBooth({ playAudio, stopAudio,  savedAudioData, 
         setSavedAudioData={setSavedAudioData}
         playAudio={playAudio}
         stopAudio={stopAudio}
+        deleteAudio={deleteAudio}
+        isAudioPlaying={isAudioPlaying}
+        setIsAudioPlaying={setIsAudioPlaying}
       />
     </div>
   );
