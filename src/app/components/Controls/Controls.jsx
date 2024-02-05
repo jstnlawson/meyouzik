@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Controls.css";
 
-const controls = ({
+const Controls = ({
   isSpinning,
   setIsSpinning,
   isRecordPressed,
@@ -380,4 +380,4 @@ const controls = ({
   );
 };
 
-export default controls;
+export default Controls;
