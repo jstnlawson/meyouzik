@@ -13,19 +13,6 @@ export default function AudioPlayer({ audioBuffer }) {
     let source = null;
     let audioRef = useRef(null);  
 
-    // const playAudio = (index) => {
-    //   console.log("Playing audio at index:", index);
-    //   const selectedBuffer = savedAudioData[index];
-    //   if (selectedBuffer && audioContext) {
-    //     source = audioContext.createBufferSource();
-    //     source.buffer = selectedBuffer;
-    //     source.connect(audioContext.destination);
-    //     source.start();
-
-    //     audioRef.current = source;
-    //   }
-    // };
-
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
     const playAudio = (index) => {
@@ -58,13 +45,6 @@ export default function AudioPlayer({ audioBuffer }) {
       }
     };
   
-    // const stopAudio = (index) => {
-    //   if (source) {
-    //     source.stop();
-    //     source = null;
-    //   }
-    // };
-
     const stopAudio = () => {
       console.log("Stopping audio");
       if (audioRef.current) {

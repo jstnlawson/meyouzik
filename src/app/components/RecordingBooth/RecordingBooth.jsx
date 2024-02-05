@@ -18,6 +18,8 @@ export default function RecordingBooth({
   const [availableDevices, setAvailableDevices] = useState([]);
   const [selectedDevice, setSelectedDevice] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(0.7); // Initial zoom level
+  const zoomRef = useRef(null);
 
   let recordedChunks = useRef([]);
   let mediaRecorderRef = useRef(null);
@@ -165,6 +167,10 @@ export default function RecordingBooth({
   
 
   return (
+    <div
+      ref={zoomRef}
+      style={{ transform: `scale(${zoomLevel})`, transition: "transform 0.3s" }}
+    >
     <div className="px-5">
       <div className="py-5">
         {/* <div className="flex flex-col justify-center items-center gap-8">
@@ -278,7 +284,10 @@ export default function RecordingBooth({
         deleteAudio={deleteAudio}
         isAudioPlaying={isAudioPlaying}
         setIsAudioPlaying={setIsAudioPlaying}
+        zoomLevel={zoomLevel}
+        setZoomLevel={setZoomLevel}
       />
+    </div>
     </div>
   );
 }

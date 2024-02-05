@@ -1,6 +1,6 @@
 .reel-to-reel__container {
     height: 100vh;
-    
+
 }
 
 .tape-player * {
@@ -21,28 +21,34 @@
     cursor: pointer;
     box-sizing: border-box;
     z-index: 0;
+    pointer-events: none;
 }
 
-.tape-player:before, .tape-player:after {
+.tape-player:before,
+.tape-player:after {
     content: '';
     position: absolute;
     top: -5px;
     bottom: 0;
     width: 2.5vw;
-    height: 80vw;
+    height: 78vw;
     border-radius: 0 0 2px 2px;
     background: repeating-linear-gradient(to right, rgb(85, 49, 36) 0px, rgb(97, 53, 34) 2px, rgb(54, 30, 22) 4px, rgb(115, 57, 38) 3px, rgb(65, 42, 35) 6px, rgb(102, 51, 20) 8px);
     z-index: -5;
 }
 
-.tape-player:before { left: -2.5vw ;}
+.tape-player:before {
+    left: -2.5vw;
+}
 
-.tape-player:after { right: -2.5vw; }
+.tape-player:after {
+    right: -2.5vw;
+}
 
 .top {
     width: 100%;
     height: 1vw;
-    background-image: linear-gradient(to right, #777676 0%, #d7d7d7 50%, #777676 100%); 
+    background-image: linear-gradient(to right, #777676 0%, #d7d7d7 50%, #777676 100%);
 }
 
 .vents {
@@ -51,6 +57,16 @@
     background-color: #333;
     background: repeating-linear-gradient(to bottom,
             #000000 0vw, #595858 1vw);
+}
+
+.zoom-in-cursor {
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+    cursor: zoom-in !important;
+}
+
+.zoom-out-cursor {
+    cursor: zoom-out !important;
 }
 
 /*----------------------------------------------------------------------------------
@@ -87,7 +103,7 @@
     width: 96%;
     border-radius: .5vw;
     background-color: #d7d7d7;
-    background-image: linear-gradient(to right,  #999 0%, #dfdfdf 50%, #999 100%);
+    background-image: linear-gradient(to right, #999 0%, #dfdfdf 50%, #999 100%);
     clip-path: ellipse(85% 100% at 50% 0%);
     border-bottom-left-radius: 2vw;
     /* Adjust as needed */
@@ -182,7 +198,8 @@
     Small Reels
 ----------------------------------------------------------------------------------*/
 
-.small-reel, .small-reel__two {
+.small-reel,
+.small-reel__two {
     width: 2vw;
     height: 2vw;
     background: white;
@@ -196,9 +213,13 @@
     border: 2px solid transparent;
 }
 
-.small-reel { left: 16vw; }
+.small-reel {
+    left: 16vw;
+}
 
-.small-reel__two { right: 16vw; }
+.small-reel__two {
+    right: 16vw;
+}
 
 .tape-player .circle {
     position: absolute;
@@ -229,7 +250,7 @@
     left: 2.3vw;
     width: 20vw;
     height: 1px;
-    transform: rotateZ(67deg);   
+    transform: rotateZ(67deg);
 }
 
 .tape-left__bottom {
@@ -262,7 +283,8 @@
 ----------------------------------------------------------------------------------*/
 
 
-.big-reel__container--left , .big-reel__container--right {
+.big-reel__container--left,
+.big-reel__container--right {
     position: absolute;
     border-radius: 50%;
     height: 35vw;
@@ -272,11 +294,16 @@
     animation-play-state: paused;
 }
 
-.big-reel__container--left { left: -5px; }
+.big-reel__container--left {
+    left: -5px;
+}
 
-.big-reel__container--right { right: -5px; }
+.big-reel__container--right {
+    right: -5px;
+}
 
-.big-reel, .big-reel__two {
+.big-reel,
+.big-reel__two {
     border-radius: 50%;
     border: 5px solid rgba(253, 248, 232, 0.15);
     height: 100%;
@@ -289,7 +316,8 @@
     z-index: 3;
 }
 
-.big-reel__back-plate--left, .big-reel__back-plate--right {
+.big-reel__back-plate--left,
+.big-reel__back-plate--right {
     border-radius: 50%;
     height: 35vw;
     width: 35vw;
@@ -299,11 +327,16 @@
     z-index: 0;
 }
 
-.big-reel__back-plate--left { left: -2px; }
+.big-reel__back-plate--left {
+    left: -2px;
+}
 
-.big-reel__back-plate--right { right: -2px; }
+.big-reel__back-plate--right {
+    right: -2px;
+}
 
-.tape-role__left, .tape-role__right {
+.tape-role__left,
+.tape-role__right {
     border-radius: 50%;
     position: inherit;
     background: repeating-radial-gradient(circle at 50%, black 0px, #333 2px);
@@ -311,19 +344,19 @@
     z-index: 0;
 }
 
-.tape-role__left { 
+.tape-role__left {
     top: calc(50% - 10vw);
     left: calc(50% - 10vw);
     height: 20vw;
     width: 20vw;
- }
+}
 
-.tape-role__right { 
+.tape-role__right {
     top: calc(50% - 14vw);
     left: calc(50% - 14vw);
     height: 28vw;
     width: 28vw;
- }
+}
 
 .tape-player.has-tape>.small-reel,
 .tape-player.has-tape>.small-reel__two {
@@ -451,7 +484,8 @@
     width: 35vw;
 }
 
-.mounting-pin__left, .mounting-pin__right {
+.mounting-pin__left,
+.mounting-pin__right {
     position: inherit;
     border-radius: 50%;
     top: calc(50% - 0.5vw);
@@ -561,4 +595,3 @@
 .tape-player.has-tape>.tape-left {
     display: inherit;
 } */
-

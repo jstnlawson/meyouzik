@@ -1,9 +1,6 @@
 'use client';
 import React from "react";
 import  AudioContextProvider  from "./components/AudioContextProvider/AudioContextProvider";
-import RecordingBooth from "./components/RecordingBooth/RecordingBooth";
-import RecordingUi from "./components/RecordingUi/RecordingUi";
-import InputUi from "./components/Controls/Controls";
 import AudioPlayer from "./components/AudioPlayer/AudioPlayer";
 
 export default function Home() {
