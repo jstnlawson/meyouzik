@@ -61,7 +61,7 @@ export default function RecordingBooth({
       })
       .catch((err) => {
         console.error("Error requesting microphone access:", err);
-        // You might also want to handle errors here, e.g., user declined the request
+        alert("Permission to access microphone was denied in browser settings. Please reset and allow access to microphone to record audio.");
       });
   }
 

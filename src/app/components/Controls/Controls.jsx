@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./Controls.css";
 
 const Controls = ({
@@ -65,7 +65,17 @@ const Controls = ({
   }
   };
 
-  const handleStopBtn = () => {
+  // const handleStopBtn = () => {
+  //   setIsRecordPressed(false);
+  //   setIsPlaying(false);
+  //   setIsSpinning(false);
+  //   if (isMicrophoneAllowed === "granted" && isRecording) {
+  //     stopRecording();
+  //   }
+  //   stopAudio();
+  // };
+
+  const handleStopBtn = useCallback(() => {
     setIsRecordPressed(false);
     setIsPlaying(false);
     setIsSpinning(false);
@@ -73,7 +83,7 @@ const Controls = ({
       stopRecording();
     }
     stopAudio();
-  };
+  }, [isMicrophoneAllowed, isRecording, stopRecording, stopAudio]); 
 
   const handlePlayBtn = () => {
     if (recordCount > 0) {
@@ -105,7 +115,7 @@ const Controls = ({
     return isPlaying ? "play-light__on" : "play-light__off";
   };
 
-  const autoPositionSlider = () => {
+  const autoPositionSlider = useCallback(() => {
     const slider = document.querySelector('input[type="range"]');
     const value = slider.value;
     let newPosition;
@@ -134,7 +144,7 @@ const Controls = ({
     } else {
       console.error("No available devices found");
     }
-  };    
+  }, [setPosition, availableDevices, handleSelectAudioDevice]);    
 
   const handlePreviousBtn = () => {
     if (currentAudioIndex > 0) {
@@ -153,7 +163,7 @@ const Controls = ({
     if (availableDevices && availableDevices.length > 0 && availableDevices.every(device => device.id)) {
       autoPositionSlider();
     }
-  }, [availableDevices]); // Depend on availableDevices so it re-runs when availableDevices updates
+  }, [availableDevices, autoPositionSlider]); // Depend on availableDevices so it re-runs when availableDevices updates
   
   const prevIsAudioPlaying = useRef(false);
   useEffect(() => {
