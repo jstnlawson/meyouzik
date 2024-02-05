@@ -44,7 +44,7 @@ export default function RecordingBooth({
         console.log("changed to:", result.state);
       };
       if (result.state === "denied") {
-        alert("Please allow microphone access to use Meeboard");
+        alert("Please allow microphone access to record audio");
       }
     });
   }, []);

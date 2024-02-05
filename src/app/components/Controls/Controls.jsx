@@ -123,20 +123,18 @@ const Controls = ({
 
     setPosition(newPosition);
 
-    const selectedIndex = Math.floor((value / 100) * availableDevices.length);
-    // const selectedInput = availableDevices[selectedIndex];
-
-    // Check if selectedDevice is defined and has an 'id' property
-    if (availableDevices[selectedIndex] && availableDevices[selectedIndex].id) {
+    if (availableDevices && availableDevices.length > 0) {
+      const selectedIndex = Math.floor((value / 100) * availableDevices.length);
       const selectedDevice = availableDevices[selectedIndex];
-      // Call handleSelectAudioDevice with the selected device
-      handleSelectAudioDevice(selectedDevice.id);
+      if (selectedDevice && selectedDevice.id) {
+        handleSelectAudioDevice(selectedDevice.id);
+      } else {
+        console.error("Selected device is undefined or does not have an id property");
+      }
     } else {
-      console.error(
-        "Selected device is undefined or does not have an id property"
-      );
+      console.error("No available devices found");
     }
-  };
+  };    
 
   const handlePreviousBtn = () => {
     if (currentAudioIndex > 0) {
@@ -151,9 +149,12 @@ const Controls = ({
   };
 
   useEffect(() => {
-    autoPositionSlider();
-  }, []);
-
+    // Ensure availableDevices is populated and contains objects with id property
+    if (availableDevices && availableDevices.length > 0 && availableDevices.every(device => device.id)) {
+      autoPositionSlider();
+    }
+  }, [availableDevices]); // Depend on availableDevices so it re-runs when availableDevices updates
+  
   const prevIsAudioPlaying = useRef(false);
   useEffect(() => {
     if (!isAudioPlaying && prevIsAudioPlaying.current) {
@@ -349,8 +350,7 @@ const Controls = ({
                       ? "input-screen__text bg-[#0dff0032]"
                       : "input-screen__text" // Default background color for other samples
                   }`}
-                >
-                    
+                >            
                       Sample-{index + 1}
                     
                   </li>
@@ -365,9 +365,6 @@ const Controls = ({
           <button className="next-button" onClick={handleNextBtn}>
             <span className="next-button-inside">˃</span>
           </button>
-          {/* <button className="next-button">
-            <span className="next-button-inside">✉</span>
-          </button> */}
           <button className="next-button" onClick={handleDeleteBtn}>
             <span className="next-button-inside">x</span>
           </button>
