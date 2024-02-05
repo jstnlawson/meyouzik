@@ -17,19 +17,32 @@ z-index: 0;
 * Input Selector 
 **********************************************************************************/
 
+/* .slider__container {
+   
+    transform: rotate(270deg);
+    transform-origin: left bottom;
+} */
+
+.input-select__container {
+    width: 8vw;
+    max-width: 100px;
+    min-width: 20px;
+    height: 2.25vw;
+    max-height: 30px;
+    min-height: 10px;
+    border-top: 2px solid #a2a2a2;
+    border-bottom: 3px solid #aaaaaa;
+    border-left: 2.5px solid #b4b4b4;
+    border-right: 2.5px solid #c3c2c2;
+}
+
 .slider {
     -webkit-appearance: none;
-    width: 7vw;
-    max-width: 60px;
-    height: 2vw;
-    max-height: 20px;
-    /* border-radius: 5px;   */
-    border-top: 3px solid rgba(0, 0, 0, 0.444);
-    border-bottom: 3px solid rgba(0, 0, 0, 0.362);
-    border-left: 4px solid rgba(0, 0, 0, 0.201);
-    border-right: 4px solid rgba(0, 0, 0, 0.227);
-    background: #e9e6e3;
-    outline: none;
+    width: 100%;
+    height:100%;
+    border-top: solid 2px black;
+    border-bottom: solid 2px black;
+    background: linear-gradient(to right, #111 0%, #777 50%, #111 100%);    outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
@@ -38,18 +51,38 @@ z-index: 0;
     /* box-shadow: inset 0px 0px 5px #22222297, inset -5px 0px 10px -3px #000000cb; */
 }
 
+/* width: 2.5vw;
+    max-width: 30px;
+    min-width: 10px;
+    height: 4vw;
+    max-height: 45px;
+    min-height: 20px; */
+
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 2vw;
+    width: 1vw;
     max-width: 19px;
     height: 2vw;
-    max-height: 19px;
-    border-radius: 5px;
+    max-height: 21px;
+    border-radius: 2px;
     /* background: #b3b3b3; */
     cursor: grab;
-    background: linear-gradient(to right, #f6f3ef 0%, #bdbdbd 45%, #cfcfcf 50%, #bdbdbd 55%, #f6f3ef 100%);
-    box-shadow: 0px 0px 5px #222222a4, inset 0px 0px 5px #2222222f, inset -5px 0px 10px -3px #00000017;
+    background: repeating-linear-gradient(to right,
+            #000 2px, #777 4px);
+            box-shadow:
+            inset -1.5px 1.5px 1px #888,
+            inset 2px -2px 1px #000,
+            -2px 2px 4px #000;
+    /* box-shadow: 10px 0px 15px -1px rgb(0, 0, 0), -10px 0px 15px 0px rgb(0, 0, 0), 0px 10px 15px -5px rgb(0, 0, 0); */
+
+    /* background: linear-gradient(to right, #111 0%, #333 50%, #111 100%); */
+    /* background: linear-gradient(to right, #111 0%, #444 44%, #fff 49%, #fff 51%, #444 55%, #111 100%); */
+    /* box-shadow: 0px 0px 5px #222222a4, inset 0px 0px 5px #2222222f, inset -5px 0px 10px -3px #00000017; */
+}
+
+.slider::-webkit-slider-thumb:active {
+    cursor: grabbing;
 }
 
 .slider::-moz-range-thumb {
@@ -62,7 +95,6 @@ z-index: 0;
     align-items: center;
     margin-bottom: 0;
     height: fit-content;
-    font-size: .55rem;
     color: black;
     line-height: 0;
 }
@@ -138,7 +170,6 @@ z-index: 0;
     position: absolute;
     top: -1vw;
     left: 1vw;
-    font-size: 0.5rem;
     color: rgb(210, 210, 210);
     background-color: #111;
     background-image: linear-gradient(to right, #111 0%, #222 100%);
@@ -166,20 +197,27 @@ z-index: 0;
 }
 
 .input-screen__layer-two {
+    display: flex;
     position: inherit;
     overflow-y: auto;
     width: calc(100% - 1.5vw);
     height: calc(100% - 2vw);
     border: solid 1px #222;
-    color: #0dff007d; 
+    color:  #0dff0094; 
     background-image: linear-gradient(to right, #333 0%, #555 50%, #333 100%);
     border-radius: 1.5px;
     padding: 3%;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     font-family: monospace;
     box-shadow: inset 0px 0px 5px #222222, inset -5px 0px 10px -3px #000000a5;
     z-index: 1;
+}
 
+@media screen and (max-width: 600px) {
+    
+    .input-screen__layer-two {
+        font-size: 0.6rem;
+    }
 }
 
 /**********************************************************************************
@@ -193,6 +231,7 @@ z-index: 0;
     width: 10vw;
     height: fit-content;
     position: relative;
+    left: -3.5vw;
     border-top: 1px solid rgb(177, 177, 177);
     border-radius: 6px;
     padding: 5px;
@@ -205,13 +244,11 @@ z-index: 0;
     position: absolute;
     top: -1vw;
     left: 10%;
-    font-size: 0.5rem;
     color: rgb(210, 210, 210);
     background-color: #111;
     background-image: linear-gradient(to right, #111 0%, #222 100%);
     font-weight: 500;
     padding: 0 0.125vw;
-    border-radius: 5px;
     text-transform: uppercase;
     z-index: 2;
 }
@@ -227,7 +264,6 @@ z-index: 0;
     max-width: 35px;
     height: 2.5vw;
     max-height: 35px;
-    background-color: #000;
     border-radius: 50%;
 }
 
@@ -265,7 +301,8 @@ z-index: 0;
 .power-light__off,
 .mic-light__off,
 .record-light__off,
-.play-light__off {
+.play-light__off,
+.line-light__off {
     background-image: radial-gradient(11px 11px at 30% 50%, #aaaaaa, #111);
     width: 1.25vw;
     max-width: 11px;
@@ -277,9 +314,15 @@ z-index: 0;
     border: solid 2px #555;
 }
 
+.power-light__off,
+.mic-light__off,
+.line-light__off {
+    margin-top: 4px;
+}
+
 .record-light__on {
-    background: rgb(255, 140, 140);
-    background-image: radial-gradient(red, transparent);
+    background: red;
+    background-image: radial-gradient(white, transparent);
     background-size: 5px 5px;
     width: 1.25vw;
     max-width: 11px;
@@ -295,8 +338,8 @@ z-index: 0;
 }
 
 .play-light__on {
-    background: rgb(149, 254, 149);
-    background-image: radial-gradient(green, transparent);
+    background: green;
+    background-image: radial-gradient(white, transparent);
     background-size: 5px 5px;
     width: 1.25vw;
     max-width: 11px;
@@ -309,6 +352,24 @@ z-index: 0;
     box-shadow:
         0 0 3px #111 inset,
         0 0 10px green;
+}
+
+.power-light__on, .mic-light__on, .line-light__on {
+    background: orange;
+    background-image: radial-gradient(rgb(255, 255, 255), transparent);
+    background-size: 5px 5px;
+    width: 1.25vw;
+    max-width: 11px;
+    min-width: 5px;
+    height: 1.25vw;
+    margin-top: 4px;
+    max-height: 11px;
+    min-height: 5px;
+    border-radius: 50%;
+    border: solid 2px #555;
+    box-shadow:
+        0 0 3px #111 inset,
+        0 0 10px orange;
 }
 
 /**********************************************************************************
@@ -448,17 +509,6 @@ z-index: 0;
         inset 1px -1px 1px 0px transparent,
         -1px 1px 1px 0px transparent;
 }
-
-/* .previous-button .next-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3px;
-    border: 2px solid transparent;
-    border-radius: 50%;
-    background-color: transparent;
-    z-index: 4;
-  } */
   
   .next-button-inside, .previous-button-inside {
     color: rgb(215, 215, 215);

@@ -40,7 +40,7 @@ export default function RecordingUi({
 
   return (
     <div className="reel-to-reel__container">
-      <div className={playerClass} onClick={togglePlaying}>
+      <div className={playerClass}>
         <div className="top"></div>
         <div className="vents"></div>
 

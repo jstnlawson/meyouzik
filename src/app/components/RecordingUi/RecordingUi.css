@@ -87,7 +87,7 @@
     width: 96%;
     border-radius: .5vw;
     background-color: #d7d7d7;
-    background-image: linear-gradient(to right,  #777676 0%, #d7d7d7 50%, #777676 100%);
+    background-image: linear-gradient(to right,  #999 0%, #dfdfdf 50%, #999 100%);
     clip-path: ellipse(85% 100% at 50% 0%);
     border-bottom-left-radius: 2vw;
     /* Adjust as needed */
@@ -128,7 +128,7 @@
     font-size: 1.25vw;
     text-transform: capitalize;
     border-radius: 2px;
-    background: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
+    background: linear-gradient(to right, #525252 -25%, #999 22%, #d7d7d7 50%, #999 78%, #525252 120%);
 }
 
 .tape-reader__label__l-span {

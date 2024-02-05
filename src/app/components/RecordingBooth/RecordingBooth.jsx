@@ -26,7 +26,7 @@ export default function RecordingBooth({
   function getAvailableAudioDevices() {
     navigator.mediaDevices.enumerateDevices().then((devices) => {
       const audioDevices = devices
-        .filter((d) => d.kind === "audioinput" && d.deviceId !== "default")
+        .filter((d) => d.kind === "audioinput" && d.deviceId !== "e9fd2cd7052325afd267aa995dc88ffed25019dd8ef95d1dcd0f579608f7d824" && d.deviceId !== "default")
         .map((d) => ({
           id: d.deviceId,
           label: d.label,
@@ -65,7 +65,7 @@ export default function RecordingBooth({
 
   function handleSelectAudioDevice(id) {
     setSelectedDevice(id);
-    console.log(id);
+    console.log('device is:',id);
   }
 
   function stopRecording() {
@@ -167,7 +167,7 @@ export default function RecordingBooth({
   return (
     <div className="px-5">
       <div className="py-5">
-        <div className="flex flex-col justify-center items-center gap-8">
+        {/* <div className="flex flex-col justify-center items-center gap-8">
           {isMicrophoneAllowed === "granted" && (
             <>
               <p>Please select a microphone input</p>
@@ -256,7 +256,7 @@ export default function RecordingBooth({
               </li>
             </ul>
           ))}
-        </div>
+        </div> */}
       </div>
       <RecordingUi
         allowMicrophone={allowMicrophone}

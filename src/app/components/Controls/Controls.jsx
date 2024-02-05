@@ -29,13 +29,40 @@ const controls = ({
   const [position, setPosition] = useState("middle");
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
+  const [recordCount, setRecordCount] = useState(0);
+  const [isMicLightOn, setIsMicLightOn] = useState(false);
+  const [isLineLightOn, setIsLineLightOn] = useState(false);
   const audioRef = useRef(new Audio());
+  const maxRecordings = 6;
+
+  const handleMicBtn = () => {
+    allowMicrophone();
+    setIsMicLightOn(true);
+  };
+
+  const handleLineSlider = () => {
+    if (isMicLightOn === true) {
+    setIsLineLightOn(true);
+    } else {
+      alert("Please allow microphone access by clicking the 'MIC' button before selecting an input.");
+    }
+    autoPositionSlider();
+  };
 
   const handleRecordBtn = () => {
+    if (isLineLightOn === true) {
+    if (recordCount < maxRecordings) {
     setIsRecordPressed(true);
     setIsPlaying(false);
     setIsSpinning(true);
     startRecording();
+    setRecordCount(prevCount => prevCount + 1); 
+    } else {
+      alert("Recording limit reached. You cannot make more recordings."); 
+    }
+  } else {
+    alert("Please allow microphone access by pressing the 'MIC' button then select an input with the line slider to record."); 
+  }
   };
 
   const handleStopBtn = () => {
@@ -49,13 +76,20 @@ const controls = ({
   };
 
   const handlePlayBtn = () => {
+    if (recordCount > 0) {
     setIsPlaying(true);
     setIsRecordPressed(false);
     setIsSpinning(true);
     playAudio(currentAudioIndex);
-    // if (isAudioPlaying === false) {
-    //   handleStopBtn();  
-    // }
+    }
+  };
+
+  const micLight = () => {
+    return isMicLightOn ? "mic-light__on" : "mic-light__off";
+  };
+
+  const lineLight = () => {
+    return isLineLightOn ? "line-light__on" : "line-light__off";
   };
 
   const recordLight = () => {
@@ -100,18 +134,14 @@ const controls = ({
   };
 
   const handlePreviousBtn = () => {
-    console.log("index in previous", currentAudioIndex);
     if (currentAudioIndex > 0) {
-      setCurrentAudioIndex(currentAudioIndex - 1);
-      stopAudio();
+      setCurrentAudioIndex((prevIndex) => prevIndex - 1);
     }
   };
-
+  
   const handleNextBtn = () => {
-    console.log("index in next", currentAudioIndex);
     if (currentAudioIndex < savedAudioData.length - 1) {
-      setCurrentAudioIndex(currentAudioIndex + 1);
-      stopAudio();
+      setCurrentAudioIndex((prevIndex) => prevIndex + 1);
     }
   };
 
@@ -126,8 +156,23 @@ const controls = ({
     }
     prevIsAudioPlaying.current = isAudioPlaying;
   }, [isAudioPlaying, handleStopBtn]);
+
+  const containerRef = useRef(null);
   
+  useEffect(() => {
+    const container = containerRef.current;
   
+    if (container && container.children && container.children.length > 0) {
+      const item = container.children[currentAudioIndex];
+  
+      if (item) {
+        item.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+        });
+      }
+    }
+  }, [currentAudioIndex]);
 
   function selectAudioInput(id) {
     setSelectedDevice(id);
@@ -138,43 +183,38 @@ const controls = ({
       <div className="flex middle-panel__container py-[2%] px-[5%] justify-between">
         <div className="middle-panel__left flex justify-between items-center w-[33%]">
           <div className="power-btn__container flex flex-col justify-center items-center">
-            <span className="text-[.5rem] text-black">PWR</span>
+            <span className="text-[.5rem] md:text-[0.6rem] text-black">PWR</span>
             <button className="vrt-btn">
               <span className="mic-btn"></span>
             </button>
-            <div className="power-light__off mt-1"></div>
+            <div className="power-light__on"></div>
           </div>
           <div className="mic-btn__container flex flex-col justify-center items-center">
-            <span className="text-[.5rem] text-black">MIC</span>
-            <button className="vrt-btn" onClick={allowMicrophone}>
+            <span className="text-[.5rem] md:text-[0.6rem] text-black">MIC</span>
+            <button className="vrt-btn" onClick={handleMicBtn}>
               <span className="mic-btn"></span>
             </button>
-            <div className="mic-light__off mt-1"></div>
+            <div className={micLight()}></div>
           </div>
-          <div className="input-selector__container flex-col">
-            <div className="flex input-label__container">
-              <div className="input-label__two mr-[2px]">2</div>
-            </div>
-            <div className="flex justify-bottom items-center bracket-div__container">
-              <div className="input-label__one">1</div>
-              <div className="bracket-div__one"></div>
-              <div className="bracket-div__two"></div>
-              <div className="bracket-div__three"></div>
-              <div className="bracket-div__four"></div>
-              <div className="input-label__three">3</div>
-            </div>
+            <div className=" flex flex-col justify-center items-center text-black text-[.5rem] md:text-[0.6rem]">
+              <span>LINE</span>
+              <div className="input-select__container">
             <input
               type="range"
               min="0"
               max="100"
               step="1"
-              onChange={autoPositionSlider} // Use onChange instead of onClick
+              onChange={handleLineSlider} 
               className="slider"
             />
-            <div className="flex justify-center items-center leading-[0]">
-              <span className="text-black text-[.55rem] mt-1">LINE</span>
             </div>
-          </div>
+            <div className="input-select__numbers flex justify-between w-[77%] text-[.5rem] md:text-[0.6rem]">
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+            </div>
+              <div className={lineLight()}></div>
+            </div>
         </div>
 
         <div className="middle-panel__middle flex w-[33%]"></div>
@@ -187,13 +227,13 @@ const controls = ({
             </div>
             <div className="flex btn-container">
               <button className="btn" onClick={handleRecordBtn}>
-                <span className="record-btn">rec</span>
+                <span className="record-btn md:text-[0.7rem]">rec</span>
               </button>
               <button className="btn" onClick={handleStopBtn}>
-                <span className="stop-btn">stop</span>
+                <span className="stop-btn md:text-[0.7rem]">stop</span>
               </button>
               <button className="btn" onClick={handlePlayBtn}>
-                <span className="play-btn">play</span>
+                <span className="play-btn md:text-[0.7rem]">play</span>
               </button>
             </div>
           </div>
@@ -202,7 +242,7 @@ const controls = ({
       <div className="bottom-panel flex justify-between items-center  py-[1%] px-[5%]">
         <div className="bottom-panel__left flex w-[33%] justify-center items-center flex-col ">
           <div className="input-screen flex justify-center items-center">
-            <span className="input-screen__title">current input</span>
+            <span className="input-screen__title text-[.5rem] md:text-[.6rem]">current input</span>
             <div className="input-screen__layer-one"></div>
             <div className="input-screen__layer-two ">
               {isMicrophoneAllowed === "prompt" && (
@@ -236,7 +276,7 @@ const controls = ({
           </div>
 
           <div className="mic-inputs__container">
-            <span className="mic-inputs__title">mic/line</span>
+            <span className="mic-inputs__title text-[.5rem] md:text-[.6rem]  bg-[#000] md:bg-[transparent]">inputs</span>
 
             <div className="mic-inputs">
               <div className="mic-inputs__layer-one">
@@ -268,8 +308,9 @@ const controls = ({
             </div>
             <div className="vu-meter__arch-container">
               <div className="vu-meter__arch--color">
-                | | | | | | | | | | | | | | | | <br />| | | | | | | | | | | | |
-                | | | | | | | |
+                | | | | | | | | | | | | | <br />| | | | | | | | | | | | |
+                | | | | | | | | <br />| | | | | | | | | | | | |
+                | | | | | | | | | | | | | |
               </div>
               <div className="vu_meter__arch--overlap"></div>
             </div>
@@ -282,10 +323,10 @@ const controls = ({
         </div>
 
         <div className="bottom-panel__right flex flex-col w-[33%] justify-center">
-          <div className="input-screen flex justify-center items-center">
-            <span className="input-screen__title">sample</span>
+          <div className="input-screen flex justify-center items-center mb-2">
+            <span className="input-screen__title text-[.5rem] md:text-[.6rem]">samples</span>
             <div className="input-screen__layer-one"></div>
-            <div className="input-screen__layer-two ">
+            <div className="input-screen__layer-two sm:flex-row flex-col flex-wrap" ref={containerRef}>
               {isMicrophoneAllowed === "granted" && !savedAudioData.length &&
                 !isRecording &&
                 selectedDevice && (
@@ -296,29 +337,17 @@ const controls = ({
                   </>
                 )}
               {savedAudioData.map((audioBuffer, index) => (
-                <ul key={index}>
-                  <li className="p-1 flex justify-center items-center bg-white rounded mb-1">
-                    <p className="mr-2 text-black text-[.5rem]">
-                      S-{index + 1}
-                    </p>
-                    <button
-                      onClick={() => playAudio(index)}
-                      className="text-black text-[.4rem] bg-green-500 p-[1px]"
-                    >
-                      Play
-                    </button>
-                    <button
-                      onClick={ () => stopAudio(index)}
-                      className="text-black text-[.4rem] bg-red-500 p-[1px]"
-                    >
-                      Stop
-                    </button>
-                    <button
-                      className="bg-white text-black text-[.65rem] p-1 ml-2"
-                      onClick={() => deleteAudio(index)}
-                    >
-                      🅇
-                    </button>
+                <ul key={index} className="flex md:flex-row flex-col">
+                  <li
+                  className={`p-1  ${
+                    currentAudioIndex === index
+                      ? "input-screen__text bg-[#0dff0032]"
+                      : "input-screen__text" // Default background color for other samples
+                  }`}
+                >
+                    
+                      Sample-{index + 1}
+                    
                   </li>
                 </ul>
               ))}
@@ -333,10 +362,10 @@ const controls = ({
           </button>
           {/* <button className="next-button">
             <span className="next-button-inside">✉</span>
-          </button>
-          <button className="next-button">
-            <span className="next-button-inside">x</span>
           </button> */}
+          <button className="next-button" onClick={() => deleteAudio(currentAudioIndex)}>
+            <span className="next-button-inside">x</span>
+          </button>
           </div>
         </div>
       </div>
