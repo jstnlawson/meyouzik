@@ -28,7 +28,7 @@ export default function RecordingBooth({
   function getAvailableAudioDevices() {
     navigator.mediaDevices.enumerateDevices().then((devices) => {
       const audioDevices = devices
-        .filter((d) => d.kind === "audioinput" && d.deviceId !== "e9fd2cd7052325afd267aa995dc88ffed25019dd8ef95d1dcd0f579608f7d824" && d.deviceId !== "default")
+        .filter((d) => d.kind === "audioinput" && d.deviceId !== "default")
         .map((d) => ({
           id: d.deviceId,
           label: d.label,

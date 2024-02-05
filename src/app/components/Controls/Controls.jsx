@@ -84,6 +84,11 @@ const controls = ({
     }
   };
 
+  const handleDeleteBtn = () => {
+    deleteAudio(currentAudioIndex);
+    setRecordCount((prevCount) => prevCount - 1);
+  };
+
   const micLight = () => {
     return isMicLightOn ? "mic-light__on" : "mic-light__off";
   };
@@ -363,7 +368,7 @@ const controls = ({
           {/* <button className="next-button">
             <span className="next-button-inside">✉</span>
           </button> */}
-          <button className="next-button" onClick={() => deleteAudio(currentAudioIndex)}>
+          <button className="next-button" onClick={handleDeleteBtn}>
             <span className="next-button-inside">x</span>
           </button>
           </div>
