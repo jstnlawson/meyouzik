@@ -338,11 +338,12 @@ const Controls = ({
           </div>
         </div>
 
-        <div className="bottom-panel__right flex flex-col w-[33%] justify-center">
+        <div className="bottom-panel__right flex flex-col w-[33%] justify-center items-center">
+          <div>
           <div className="input-screen flex justify-center items-center sm:mb-2 sm:mt-0 mt-1">
             <span className="input-screen__title text-[.3rem] md:text-[.6rem] ">samples</span>
             <div className="input-screen__layer-one"></div>
-            <div className="input-screen__layer-two sm:flex-row flex-col flex-wrap" ref={containerRef}>
+            <div className="input-screen__layer-two  flex-wrap" ref={containerRef}>
               {isMicrophoneAllowed === "granted" && !savedAudioData.length &&
                 !isRecording &&
                 selectedDevice && (
@@ -378,6 +379,7 @@ const Controls = ({
           <button className="next-button" onClick={handleDeleteBtn}>
             <span className="next-button-inside">x</span>
           </button>
+          </div>
           </div>
         </div>
       </div>

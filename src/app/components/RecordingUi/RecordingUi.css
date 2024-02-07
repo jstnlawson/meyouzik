@@ -32,7 +32,7 @@
     top: -5px;
     bottom: 0;
     width: 2.5vw;
-    height: 90vw;
+    height: 80vw;
     min-height: 360px;
     border-radius: 0 0 2px 2px;
     background: repeating-linear-gradient(to right, rgb(85, 49, 36) 0px, rgb(97, 53, 34) 2px, rgb(54, 30, 22) 4px, rgb(115, 57, 38) 3px, rgb(65, 42, 35) 6px, rgb(102, 51, 20) 8px);
@@ -69,6 +69,20 @@
 
 .zoom-out-cursor {
     cursor: zoom-out !important;
+}
+
+@media screen and (max-width: 600px) {
+    .tape-player:before,
+    .tape-player:after {   
+        height: 85vw;
+    }  
+}
+
+@media screen and (max-width: 500px) {
+    .tape-player:before,
+    .tape-player:after {   
+        height: 90vw;
+    }  
 }
 
 /*----------------------------------------------------------------------------------
