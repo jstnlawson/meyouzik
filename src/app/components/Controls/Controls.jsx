@@ -258,7 +258,7 @@ const Controls = ({
       <div className="bottom-panel flex justify-between items-center  py-[1%] px-[5%]">
         <div className="bottom-panel__left flex w-[33%] justify-center items-center flex-col ">
           <div className="input-screen flex justify-center items-center">
-            <span className="input-screen__title text-[.5rem] md:text-[.6rem]">current input</span>
+            <span className="input-screen__title text-[.3rem] md:text-[.6rem] sm:text-[.4rem]">current input</span>
             <div className="input-screen__layer-one"></div>
             <div className="input-screen__layer-two ">
               {isMicrophoneAllowed === "prompt" && (
@@ -292,7 +292,7 @@ const Controls = ({
           </div>
 
           <div className="mic-inputs__container">
-            <span className="mic-inputs__title text-[.5rem] md:text-[.6rem]  bg-[#000] md:bg-[transparent]">inputs</span>
+            <span className="mic-inputs__title text-[.2rem] md:text-[.6rem]  sm:text-[.4rem] bg-[#000] md:bg-[transparent]">inputs</span>
 
             <div className="mic-inputs">
               <div className="mic-inputs__layer-one">
@@ -339,8 +339,8 @@ const Controls = ({
         </div>
 
         <div className="bottom-panel__right flex flex-col w-[33%] justify-center">
-          <div className="input-screen flex justify-center items-center mb-2">
-            <span className="input-screen__title text-[.5rem] md:text-[.6rem]">samples</span>
+          <div className="input-screen flex justify-center items-center sm:mb-2 sm:mt-0 mt-1">
+            <span className="input-screen__title text-[.3rem] md:text-[.6rem] ">samples</span>
             <div className="input-screen__layer-one"></div>
             <div className="input-screen__layer-two sm:flex-row flex-col flex-wrap" ref={containerRef}>
               {isMicrophoneAllowed === "granted" && !savedAudioData.length &&

@@ -26,10 +26,10 @@ z-index: 0;
 .input-select__container {
     width: 8vw;
     max-width: 100px;
-    min-width: 20px;
+    min-width: 35px;
     height: 2.25vw;
     max-height: 30px;
-    min-height: 10px;
+    min-height: 15px;
     border-top: 2px solid #a2a2a2;
     border-bottom: 3px solid #aaaaaa;
     border-left: 2.5px solid #b4b4b4;
@@ -63,8 +63,10 @@ z-index: 0;
     appearance: none;
     width: 1vw;
     max-width: 19px;
+    min-width: 7px;
     height: 2vw;
     max-height: 21px;
+    min-height: 10px;
     border-radius: 2px;
     /* background: #b3b3b3; */
     cursor: grab;
@@ -159,7 +161,9 @@ z-index: 0;
 
 .input-screen {
     width: 20vw;
+    min-width: 95px;
     height: 6vw;
+    min-height: 50px;
     position: relative;
     border: 1px solid rgb(177, 177, 177);
     border-radius: 6px;
@@ -185,8 +189,8 @@ z-index: 0;
     justify-content: center;
     align-items: center;
     position: absolute;
-    width: 19vw;
-    height: 5vw;
+    width: 94%;
+    height: 94%;
     background-color: #111;
     border-top: 0.75vw solid #333;
     border-bottom: 0.75vw solid rgb(120, 120, 120);
@@ -213,10 +217,17 @@ z-index: 0;
     z-index: 1;
 }
 
+@media screen and (max-width: 900px){
+    .input-screen__layer-two {
+        font-size: 0.5rem;
+    }
+}
+
 @media screen and (max-width: 600px) {
+
     
     .input-screen__layer-two {
-        font-size: 0.6rem;
+        font-size: 0.4rem;
     }
 }
 
@@ -306,12 +317,12 @@ z-index: 0;
     background-image: radial-gradient(11px 11px at 30% 50%, #aaaaaa, #111);
     width: 1.25vw;
     max-width: 11px;
-    min-width: 5px;
+    min-width: 7px;
     height: 1.25vw;
     max-height: 11px;
-    min-height: 5px;
+    min-height: 7px;
     border-radius: 50%;
-    border: solid 2px #555;
+    border: solid 1px #555;
 }
 
 .power-light__off,
@@ -331,7 +342,7 @@ z-index: 0;
     max-height: 11px;
     min-height: 5px;
     border-radius: 50%;
-    border: solid 2px #555;
+    border: solid 1px #555;
     box-shadow:
         0 0 3px #111 inset,
         0 0 10px red;
@@ -348,7 +359,7 @@ z-index: 0;
     max-height: 11px;
     min-height: 5px;
     border-radius: 50%;
-    border: solid 2px #555;
+    border: solid 1px #555;
     box-shadow:
         0 0 3px #111 inset,
         0 0 10px green;
@@ -360,13 +371,13 @@ z-index: 0;
     background-size: 5px 5px;
     width: 1.25vw;
     max-width: 11px;
-    min-width: 5px;
+    min-width: 7px;
     height: 1.25vw;
     margin-top: 4px;
     max-height: 11px;
-    min-height: 5px;
+    min-height: 7px;
     border-radius: 50%;
-    border: solid 2px #555;
+    border: solid 1px #555;
     box-shadow:
         0 0 3px #111 inset,
         0 0 10px orange;
@@ -398,7 +409,7 @@ z-index: 0;
     min-height: 20px;
     width: 5vw;
     max-width: 60px;
-    min-width: 30px;
+    min-width: 35px;
 }
 
 .vrt-btn {
@@ -412,10 +423,10 @@ z-index: 0;
     text-transform: uppercase;
     width: 2.5vw;
     max-width: 30px;
-    min-width: 10px;
+    min-width: 15px;
     height: 4vw;
     max-height: 45px;
-    min-height: 20px;
+    min-height: 23.5px;
 }
 
 .btn span {
@@ -520,7 +531,9 @@ z-index: 0;
     position: relative;
     border-radius: 50%;
     height: 2.5vw;
+    min-height: 18px;
     width: 2.5vw;
+    min-width: 18px;
     /* background-size: 80px 80px;  */
     text-align: center;
     text-transform: uppercase;
@@ -580,7 +593,9 @@ z-index: 0;
 
 .vu-meter {
     width: 17vw;
+    min-width: 75px;
     height: 12vw;
+   min-height: 50px;
     position: relative;
     overflow: hidden;
 }
@@ -636,6 +651,7 @@ z-index: 0;
     top: -3vw;
     left: 1vw;
   width: 15vw;
+  width: 88%;
   height: 9.5vw; /* Adjust the height as needed */
   color: #bdbb98;
   background: linear-gradient(to right, #bdbb98 10%, #3b39a7 60%, #a93428 80%, #bdbb98 90%);
@@ -648,8 +664,9 @@ z-index: 0;
     position: absolute;
     top: -2vw;
     left: 1.5vw;
-  width: 14vw;
-  height: 9.5vw; /* Adjust the height as needed */
+  /* width: 14vw; */
+  width: 82%;
+  height: 9.5vw; 
   background: linear-gradient(to right, #bdbb98 0%, #e8e7c9 50%, #bdbb98 100%);
   overflow: hidden;
   border-radius: 50% 50% 0 0;

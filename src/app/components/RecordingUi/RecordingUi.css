@@ -14,6 +14,7 @@
     background-image: linear-gradient(to right, #d7d7d7 -25%, #777676 22%, #d7d7d7 50%, #777676 78%, #d7d7d7 120%);
     width: 75vw;
     /* max-width: 1200px; */
+    min-width: 305px;
     height: 50vw;
     /* max-height: 900px; */
     position: relative;
@@ -31,7 +32,8 @@
     top: -5px;
     bottom: 0;
     width: 2.5vw;
-    height: 78vw;
+    height: 90vw;
+    min-height: 360px;
     border-radius: 0 0 2px 2px;
     background: repeating-linear-gradient(to right, rgb(85, 49, 36) 0px, rgb(97, 53, 34) 2px, rgb(54, 30, 22) 4px, rgb(115, 57, 38) 3px, rgb(65, 42, 35) 6px, rgb(102, 51, 20) 8px);
     z-index: -5;
@@ -79,7 +81,9 @@
     justify-content: center;
     align-items: center;
     height: 12vw;
+    min-height: 50px;
     width: 19vw;
+    min-width: 80px;
     border-radius: 1vw;
     background-color: black;
     bottom: 1.5vw;
