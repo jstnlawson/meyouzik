@@ -4,10 +4,10 @@ import { useAudioContext } from "../AudioContextProvider/AudioContextProvider.js
 import "./RecordingBooth.css";
 import RecordingUi from "../RecordingUi/RecordingUi.jsx";
 
-export default function RecordingBooth({ 
-  playAudio, 
-  stopAudio,  
-  savedAudioData, 
+export default function RecordingBooth({
+  playAudio,
+  stopAudio,
+  savedAudioData,
   setSavedAudioData,
   isAudioPlaying,
   setIsAudioPlaying,
@@ -61,14 +61,52 @@ export default function RecordingBooth({
       })
       .catch((err) => {
         console.error("Error requesting microphone access:", err);
-        alert("Permission to access microphone was denied in browser settings. Please reset and allow access to microphone to record audio.");
+        alert(
+          "Permission to access microphone was denied in browser settings. Please reset and allow access to microphone to record audio."
+        );
       });
   }
 
   function handleSelectAudioDevice(id) {
     setSelectedDevice(id);
-    console.log('device is:',id);
+    console.log("device is:", id);
   }
+
+  // function stopRecording() {
+  //   if (
+  //     mediaRecorderRef.current &&
+  //     mediaRecorderRef.current.state !== "inactive"
+  //   ) {
+  //     mediaRecorderRef.current.stop();
+  //     mediaRecorderRef.current.onstop = async () => {
+  //       const audioBlob = new Blob(recordedChunks.current, {
+  //         type: "audio/webm",
+  //       });
+  //       const arrayBuffer = await audioBlob.arrayBuffer();
+
+  //       // Check if audioContext is initialized
+  //       if (!audioContext) {
+  //         console.error("AudioContext not initialized");
+  //         return; // Or initialize it here if appropriate
+  //       }
+
+  //       try {
+  //         const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+  //         setSavedAudioData((prev) => [...prev, audioBuffer]);
+  //       } catch (error) {
+  //         console.error("Error decoding audio data", error);
+  //       }
+
+  //       recordedChunks.current = [];
+  //       if (streamRef.current) {
+  //         streamRef.current.getTracks().forEach((track) => track.stop());
+  //       }
+  //     };
+  //   } else {
+  //     console.log("MediaRecorder is not initialized or already stopped");
+  //   }
+  //   setIsRecording(false);
+  // }
 
   function stopRecording() {
     if (
@@ -90,9 +128,57 @@ export default function RecordingBooth({
 
         try {
           const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-          setSavedAudioData((prev) => [...prev, audioBuffer]);
+
+          // Create an OfflineAudioContext to process the audio
+          const offlineContext = new OfflineAudioContext(
+            audioBuffer.numberOfChannels,
+            audioBuffer.length,
+            audioBuffer.sampleRate
+          );
+
+          // Create a buffer source
+          const source = offlineContext.createBufferSource();
+          source.buffer = audioBuffer;
+
+          // Create a gain node
+          const gainNode = offlineContext.createGain();
+
+          // Define the fade durations to eliminate noise at the start and end
+          const fadeInDuration = 0.5; // 0.5 seconds fade-in at start
+          const totalDuration = audioBuffer.duration;
+          const endFadeStart = totalDuration - 0.75; // Start fade 0.75 seconds before end
+          const endFadeEnd = totalDuration - 0.25; // End fade 0.25 seconds before end
+
+          // Create the gain envelope
+          gainNode.gain.setValueAtTime(0, 0); // Start at volume 0
+          gainNode.gain.linearRampToValueAtTime(1, fadeInDuration); // Fade in to volume 1
+          gainNode.gain.setValueAtTime(1, endFadeStart); // Maintain volume 1
+          gainNode.gain.linearRampToValueAtTime(0, endFadeEnd); // Fade out to volume 0
+          gainNode.gain.setValueAtTime(0, totalDuration); // Maintain volume 0
+
+          // // Create the envelope
+          // const fadeDuration = 0.5;
+          // const totalDuration = audioBuffer.duration;
+
+          // gainNode.gain.setValueAtTime(0, 0);
+          // gainNode.gain.linearRampToValueAtTime(1, fadeDuration);
+          // gainNode.gain.setValueAtTime(1, totalDuration - fadeDuration);
+          // gainNode.gain.linearRampToValueAtTime(0, totalDuration);
+
+          // Connect the nodes
+          source.connect(gainNode);
+          gainNode.connect(offlineContext.destination);
+
+          // Start the source
+          source.start(0);
+
+          // Render the audio
+          const processedBuffer = await offlineContext.startRendering();
+
+          // Update the saved audio data
+          setSavedAudioData((prev) => [...prev, processedBuffer]);
         } catch (error) {
-          console.error("Error decoding audio data", error);
+          console.error("Error decoding or processing audio data", error);
         }
 
         recordedChunks.current = [];
@@ -156,138 +242,46 @@ export default function RecordingBooth({
 
   useEffect(() => {
     // Existing code...
-  
+
     // Ensure AudioContext is initialized
     if (!audioContext) {
       initializeAudioContext(); // This should be a method to initialize your audioContext
     }
-  
+
     // Existing code...
   }, [audioContext, initializeAudioContext, savedAudioData]);
-  
 
   return (
     <div
       ref={zoomRef}
       style={{ transform: `scale(${zoomLevel})`, transition: "transform 0.3s" }}
     >
-    <div className="px-5">
-      <div className="py-5">
-        {/* <div className="flex flex-col justify-center items-center gap-8">
-          {isMicrophoneAllowed === "granted" && (
-            <>
-              <p>Please select a microphone input</p>
-
-              {availableDevices.map((audioDevice) => (
-                <div
-                  key={audioDevice.id}
-                  onClick={() => handleSelectAudioDevice(audioDevice.id)}
-                  className={`m-2 cursor-pointer text-black p-4 flex justify-center items-center bg-white rounded ${
-                    selectedDevice === audioDevice.id
-                      ? "bg-blue-500 text-green-500"
-                      : "bg-gray-200"
-                  }`}
-                >
-                  <span className="cursor-pointer">{audioDevice.label}</span>
-                </div>
-              ))}
-            </>
-          )}
-          {isMicrophoneAllowed === "prompt" && (
-            <>
-              <p>To create samples please allow microphone access</p>
-              <button
-                className=" text-white p-1 hover:opacity-50"
-                onClick={allowMicrophone}
-              >
-                <span className="text-5xl">🎙️</span> Allow microphone
-              </button>
-            </>
-          )}
-          {isMicrophoneAllowed === "denied" && (
-            <>
-              <p>Microphone has been denied</p>
-              <button
-                className="bg-white text-black p-1"
-                onClick={allowMicrophone}
-              >
-                Allow microphone
-              </button>
-            </>
-          )}
-          {isMicrophoneAllowed === "granted" &&
-            !isRecording &&
-            selectedDevice && (
-              <>
-                <button
-                  className="bg-white text-black p-1"
-                  onClick={startRecording}
-                >
-                  Start recording
-                </button>
-              </>
-            )}
-          {isMicrophoneAllowed === "granted" && isRecording && (
-            <>
-              <button
-                className="bg-white text-black p-1"
-                onClick={stopRecording}
-              >
-                Stop recording
-              </button>
-            </>
-          )}
-          {savedAudioData.map((audioBuffer, index) => (
-            <ul key={index}>
-              <li className="p-4 flex justify-center items-center bg-white rounded">
-                <p className="mr-4 text-black">Sample {index + 1}</p>
-                <button
-                  onClick={ () => playAudio(index) }
-                  className="text-black text-[.4rem] bg-green-500 p-1"
-                >
-                  Play
-                </button>
-                <button
-                  onClick={ () => stopAudio(index)}
-                  className="text-black text-[.4rem] bg-red-500 p-1"
-                >
-                  Stop
-                </button>
-                <button
-                  className="bg-white text-black p-1 ml-4"
-                  onClick={() => deleteAudio(index)}
-                >
-                  🅇
-                </button>
-              </li>
-            </ul>
-          ))}
-        </div> */}
+      <div className="px-5">
+        <div className="py-5"></div>
+        <RecordingUi
+          allowMicrophone={allowMicrophone}
+          isMicrophoneAllowed={isMicrophoneAllowed}
+          setIsMicrophoneAllowed={setIsMicrophoneAllowed}
+          availableDevices={availableDevices}
+          setAvailableDevices={setAvailableDevices}
+          selectedDevice={selectedDevice}
+          setSelectedDevice={setSelectedDevice}
+          handleSelectAudioDevice={handleSelectAudioDevice}
+          isRecording={isRecording}
+          setIsRecording={setIsRecording}
+          startRecording={startRecording}
+          stopRecording={stopRecording}
+          savedAudioData={savedAudioData}
+          setSavedAudioData={setSavedAudioData}
+          playAudio={playAudio}
+          stopAudio={stopAudio}
+          deleteAudio={deleteAudio}
+          isAudioPlaying={isAudioPlaying}
+          setIsAudioPlaying={setIsAudioPlaying}
+          zoomLevel={zoomLevel}
+          setZoomLevel={setZoomLevel}
+        />
       </div>
-      <RecordingUi
-        allowMicrophone={allowMicrophone}
-        isMicrophoneAllowed={isMicrophoneAllowed}
-        setIsMicrophoneAllowed={setIsMicrophoneAllowed}
-        availableDevices={availableDevices}
-        setAvailableDevices={setAvailableDevices}
-        selectedDevice={selectedDevice}
-        setSelectedDevice={setSelectedDevice}
-        handleSelectAudioDevice={handleSelectAudioDevice}
-        isRecording={isRecording}
-        setIsRecording={setIsRecording}
-        startRecording={startRecording}
-        stopRecording={stopRecording}
-        savedAudioData={savedAudioData}
-        setSavedAudioData={setSavedAudioData}
-        playAudio={playAudio}
-        stopAudio={stopAudio}
-        deleteAudio={deleteAudio}
-        isAudioPlaying={isAudioPlaying}
-        setIsAudioPlaying={setIsAudioPlaying}
-        zoomLevel={zoomLevel}
-        setZoomLevel={setZoomLevel}
-      />
-    </div>
     </div>
   );
 }
